@@ -1,24 +1,64 @@
+:root[color-theme='light'] {
+  --primary-100:#424874;
+  --primary-200:#A6B1E1;
+  --primary-300:#fdf6fd;
+  --accent-100:#D9ACF5;
+  --accent-200:#FFCEFE;
+  --text-100:#292524;
+  --text-200:#64748b;
+  --bg-100:#ffffff;
+  --bg-200:#f5f5f5;
+  --bg-300:#cccccc;
+  --invert:invert(0%);
+  --header:rgba(255, 255, 255, 0.5);
+  --bg:linear-gradient(45deg, #ffeded, #cdcdff);
+}
+
+:root[color-theme='dark'] {
+  --primary-100:#424874;
+  --primary-200:#A6B1E1;
+  --primary-300:#b4c2dc;
+  --accent-100:#D9ACF5;
+  --accent-200:#FFCEFE;
+  --text-100:#FFFFFF;
+  --text-200:#e0e0e0;
+  --bg-100:#1A1F2B;
+  --bg-200:#292e3b;
+  --bg-300:#414654;   
+  --invert:invert(100%);
+  --header:rgba(66, 66, 66, 0.5);
+  --bg:linear-gradient(45deg, #605656, #6b6b93);
+}
+
 body {
-  min-height: 100vh;
-  transition:
-    color 0.5s,
-    background-color 0.5s;
+  background: var(--bg);
+  background-size: 200% 200%;
+  animation: colorChange 1s ease-in-out infinite alternate, wiggle 1s ease-in-out infinite alternate;
+  min-height: 95vh;
+  transition: 0.5s;
   line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
+  font-family: 'AritaDotum';
+  color: var(--text-100);
   font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+
+@keyframes colorChange {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+@keyframes wiggle {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
 }
