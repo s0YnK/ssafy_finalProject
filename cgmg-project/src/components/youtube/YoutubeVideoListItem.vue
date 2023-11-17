@@ -1,7 +1,11 @@
 <template>
   <li @click="clickVideo">
-    <img :src="video.snippet.thumbnails.default.url" >
-    <span>{{video.snippet.title}}</span>
+    <img :src="video.snippet.thumbnails.default.url">
+    <span>{{ video.snippet.title }}</span>
+    <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${store.selectedVideo.id.videoId}`"
+      title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen></iframe>
   </li>
 </template>
 
@@ -16,10 +20,8 @@ const props = defineProps({
   },
 });
 
-
-
-const clickVideo = function() {
-    store.clickVideo(props.video)
+const clickVideo = function () {
+  store.clickVideo(props.video)
 }
 
 

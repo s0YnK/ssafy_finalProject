@@ -29,6 +29,21 @@ const router = createRouter({
       name: 'rank',
       component: () => import('../views/RankPage.vue')
     },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("../views/LoginPage.vue"),
+    },
+    {
+      path: "/regist",
+      name: "regist",
+      component: () => import("../views/RegistPage.vue"),
+    },
+    {
+      path: "/my",
+      name: "my",
+      component: () => import("../views/MyPage.vue"),
+    },
   ]
 })
 

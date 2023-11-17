@@ -32,8 +32,8 @@
 
 body {
   background: var(--bg);
-  background-size: 200% 200%;
-  animation: colorChange 1s ease-in-out infinite alternate, wiggle 1s ease-in-out infinite alternate;
+  /* background-size: 200% 200%;
+  animation: colorChange 1s ease-in-out infinite alternate, wiggle 1s ease-in-out infinite alternate; */
   min-height: 95vh;
   transition: 0.5s;
   line-height: 1.6;
@@ -43,7 +43,7 @@ body {
 }
 
 
-@keyframes colorChange {
+/* @keyframes colorChange {
     0% {
         background-position: 0% 0%;
     }
@@ -61,4 +61,4 @@ body {
     100% {
         background-position: 100% 100%;
     }
-}
+} */
