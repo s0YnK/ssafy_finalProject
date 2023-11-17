@@ -16,6 +16,7 @@
   --bg-100:#ffffff;
   --bg-200:#f5f5f5;
   --bg-300:#cccccc;
+  --sun:#D9ACF5;
   --invert:invert(0%);
   --header:rgba(255, 255, 255, 0.5);
   --bg:linear-gradient(45deg, #ffeded, #cdcdff);
@@ -31,8 +32,9 @@
   --text-200:#e0e0e0;
   --bg-100:#1A1F2B;
   --bg-200:#292e3b;
-  --bg-300:#414654;   
-  --invert:invert(100%);
+  --bg-300:#414654;
+  --sun:#f7f6d3;
+  --invert:invert(85%);
   --header:rgba(66, 66, 66, 0.5);
   --bg:linear-gradient(45deg, #605656, #6b6b93);
 }

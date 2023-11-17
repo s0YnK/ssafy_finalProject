@@ -41,7 +41,7 @@ const loginUser = (loginUser) => {
         .then(response => {
             localStorage.setItem("loginUser", JSON.stringify(response.data));
             console.log(response.data);
-            window.location.href = "http://localhost:5173/"
+            window.location.href = "http://localhost:5173/profile"
         })
         .catch(error => {
             console.error('에러 발생:', error);
