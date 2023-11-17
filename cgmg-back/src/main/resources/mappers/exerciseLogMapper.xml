@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cgmg.model.dao.ExerciseLogDao">
+	
+	<!-- 랭킹 조회. total랭킹, 운동별 랭킹 -->
+	<select id="selectRank" parameterType="String" resultType="ExerciseLog">
+		SELECT userId, COUNT(regDate) as cnt
+		FROM exerciseLog
+		<if test="bodyPart != 'total'">
+			WHERE bodyPart = #{bodyPart}
+		</if>
+		GROUP BY userId
+		ORDER BY COUNT(regDate) DESC
+	</select>
+	
+	<!-- 특정 user의 전체기간 동안 총 운동 횟수. 티어 계산을 위한 -->
+	<select id="selectTotalCnt" parameterType="String" resultType="ExerciseLog">
+		SELECT userId, COUNT(regDate) as cnt
+		FROM exerciseLog
+		WHERE userId = #{userId}
+		GROUP BY userId
+	</select>
+	
+	<!-- user 1의 전체기간 동안 부위별 운동한 횟수. 운동 balance 그래프에 표시 위해 -->
+	<select id="selectCntByPart" parameterType="String" resultType="ExerciseLog">
+		SELECT userId, bodyPart, COUNT(regDate) as cnt
+		FROM exerciseLog
+		WHERE userId = #{userId}
+		GROUP BY bodyPart
+	</select>
+	
+	<!-- user 1의 전체기간 동안 날짜별, 운동별 운동 횟수. 스트릭 표시 위해 -->
+	<select id="selectCntByDateAndExercise" parameterType="String" resultType="ExerciseLog">
+		SELECT userId, DATE_FORMAT(regDate, '%Y-%m-%d') AS regDate, exerciseName, bodyPart, SUM(cnt) as cnt
+		FROM exerciseLog
+		WHERE userId = #{userId}
+		GROUP BY DATE_FORMAT(regDate, '%Y-%m-%d'), exerciseName
+	</select>
+	
+	<!-- 어제 운동 유무 조회 -->
+	<select id="selectCntYesterday" parameterType="String" resultType="ExerciseLog">
+		SELECT *
+		FROM exerciseLog
+		WHERE userId = #{userId}
+		AND DATE_FORMAT(regDate, '%Y-%m-%d') = CURDATE() - INTERVAL 1 DAY
+	</select>
+	
+	<!-- 오늘 운동 유무 조회 -->
+	<select id="selectCntToday" parameterType="String" resultType="ExerciseLog">
+		SELECT *
+		FROM exerciseLog
+		WHERE userId = #{userId} 
+		AND DATE_FORMAT(regDate, '%Y-%m-%d') = CURDATE()
+	</select>
+	
+	<!-- 연속 스트릭 카운트해서 프로필에 업데이트 -->
+	<update id="updateContinuedStreak" parameterType="String">
+		UPDATE users
+		<choose>
+			<when test="streak == 'plus'">
+				SET continuedStreak = continuedStreak + 1
+			</when>
+			<when test="streak == 'reset'">
+				SET continuedStreak = 0
+			</when>
+		</choose>
+		WHERE userId = #{userId}
+	</update>
+	
+	<!-- 총 운동 횟수 프로필에 업데이트 -->
+	<update id="updateTotalExerciseCnt" parameterType="String">
+		UPDATE users
+		SET totalExerciseCnt = totalExerciseCnt + 1
+		WHERE userId = #{userId}
+	</update>
+	
+	<!-- 운동 기록 작성 -->
+	<insert id="insertExerciseLog" parameterType="ExerciseLog">
+		INSERT INTO exerciseLog (exerciseName, bodyPart, cnt, userId)
+		VALUES (#{exerciseName}, #{bodyPart}, #{cnt}, #{userId})
+	</insert>
+
+	
+</mapper>
