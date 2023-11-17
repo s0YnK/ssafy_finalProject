@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cgmg.model.dao.UserDao">
+	
+	<!-- 회원 정보 등록 -->
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO users (userId, password, name, nickName, profileImg, email)
+		VALUES (#{userId}, #{password}, #{name}, #{nickName}, #{profileImg}, #{email})
+	</insert>
+	
+	<!-- 회원 정보 조회. 회원 인증 or 회원 정보 수정페이지용 -->
+	<select id="selectOne" parameterType="String" resultType="User">
+		SELECT userId, password, name, nickName, profileImg, email
+		FROM users
+		WHERE userId = #{userId}
+	</select>
+	
+	<!-- 회원 목록 조회 -->
+	<select id="selectAll" resultType="User">
+		SELECT *
+		FROM users
+	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="updateUser" parameterType="User">
+		UPDATE users
+		SET password = #{password}, name = #{name}, nickName = #{nickName}, profileImg = #{profileImg}, email = #{email}
+		WHERE userId = #{userId}
+	</update>
+	
+	<!-- 회원 정보 삭제 -->
+	<delete id="deleteUser" parameterType="String">
+		DELETE FROM users
+		WHERE userId = #{userId}
+	</delete>
+	
+	<!-- 회원 프로필 조회. 마이페이지에 표시될 정보 -->
+	<select id="selectProfile" parameterType="String" resultType="User">
+		SELECT userId, name, nickname, profileImg, email, totalExerciseCnt, continuedStreak, followingCnt, followerCnt
+		FROM users
+		WHERE userId = #{userId}
+	</select>
+	
+	<!-- 회원 정보 검색. 팔로잉 할 때 회원 검색용 -->
+	<select id="searchByUserId" parameterType="String" resultType="User">
+		SELECT userId, nickName, totalExerciseCnt, profileImg
+		FROM users
+		WHERE userId = #{word}
+		ORDER BY LENGTH(userId) ASC
+	</select>
+	
+	<!-- 내가 팔로우한 회원 목록 조회 -->
+	<select id="selectFollowingList" parameterType="String" resultType="FollowLog">
+		SELECT f.userId, f.followingId, u.nickName, u.totalExerciseCnt, u.profileImg
+		FROM followLog f
+		LEFT OUTER JOIN users u
+		ON f.followingId = u.userId
+		WHERE f.userId = #{userId}
+	</select>
+		
+	<!-- 나를 팔로우한 회원 목록 조회 -->
+	<select id="selectFollowerList" parameterType="String" resultType="FollowLog">
+		SELECT f.followingId AS userId, f.userId AS followerId, u.nickName, u.totalExerciseCnt, u.profileImg
+		FROM followLog f
+		LEFT OUTER JOIN users u
+		ON f.userId = u.userId
+		WHERE f.followingId = #{userId}
+	</select>
+	
+	<!-- 팔로우 등록 -->
+	<insert id="insertFollowId" parameterType="FollowLog">
+		INSERT INTO followLog (userId, followingId)
+		VALUES (#{userId}, #{followingId})
+	</insert>
+	
+	<!-- 팔로우 삭제 -->
+	<delete id="deleteFollowId" parameterType="FollowLog">
+		DELETE FROM followLog
+		WHERE userId = #{userId}
+		AND followingId = #{followingId}
+	</delete>
+	
+	<!-- 팔로잉수 업데이트 -->
+	<update id="updateFollowingCnt" parameterType="FollowLog">
+		UPDATE users
+		<choose>
+			<when test="cntChange == 'up'">
+				SET followingCnt = followingCnt + 1
+			</when>
+			<when test="cntChange == 'down'">
+				SET followingCnt = followingCnt - 1
+			</when>
+		</choose>
+		WHERE userId = #{userId}
+	</update>
+	
+	<!-- 팔로워수 업데이트 -->
+	<update id="updateFollowerCnt" parameterType="FollowLog">
+		UPDATE users
+		<choose>
+			<when test="cntChange == 'up'">
+				SET followerCnt = followerCnt + 1
+			</when>
+			<when test="cntChange == 'down'">
+				SET followerCnt = followerCnt - 1
+			</when>
+		</choose>
+		WHERE userId = #{followingId}
+	</update>
+	
+</mapper>
