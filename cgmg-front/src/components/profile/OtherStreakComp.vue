@@ -26,6 +26,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -43,12 +44,13 @@ const monthColors = [
 
 onMounted(async () => {
     try {
+        const route = useRoute()
         const response = await axios.get('http://localhost:8080/exercise-api/exercise/log', {
             params: {
-                userId: JSON.parse(localStorage.getItem("loginUser")).userId
+                userId: route.params.userId
             }
         });
-        console.log(JSON.parse(localStorage.getItem("loginUser")).userId) //로컬스토리지 가져오기
+        console.log(route.params.userId) //로컬스토리지 가져오기
         data.value = response.data;
         console.log(data.value[1])
         svg.value = document.getElementById("graph");

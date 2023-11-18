@@ -20,7 +20,13 @@ export const useExerciseStore = defineStore('exercise', () => {
       exerciseList.value = response.data;
     });
   };
+  const exerciseLog = function (exercise) {
+    axios.post(Exercise_API+'/exercise/log', exercise)
+    .then((response) => {
+      router.push('/exercise')
+    });
+  };
 
-  return { exerciseList, getExerciseList };
+  return { exerciseList, getExerciseList,exerciseLog };
 });
 

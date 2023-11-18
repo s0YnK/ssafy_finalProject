@@ -23,24 +23,7 @@ const store = useYoutubeStore()
 
 const searchByName = () => {
     store.youtubeSearch(keyword.value)
-    const searchDiv = document.getElementsByClassName("search-div")[0];
-    const dis1 = document.getElementsByClassName("dis")[0];
-    const dis2 = document.getElementsByClassName("dis")[1];
-    dis1.style.display = 'none';
-    dis2.style.display = 'none';
-    searchDiv.style.top = '10%';
-    searchDiv.style.left = '20%';
-    let i = 0;
-    const intervalId = setInterval(function () {
-        const div = document.getElementsByClassName(`a${i++}`)[0];
-        div.style.top = '30%';
-        div.style.opacity = '1';
 
-        // 3번 실행 후 clearInterval 호출
-        if (i > 3) {
-            clearInterval(intervalId);
-        }
-    }, 500);
 }
 
 

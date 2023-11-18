@@ -3,14 +3,22 @@ import { defineStore } from 'pinia'
 import router from "@/router";
 import axios from "axios";
 
-const REST_video_API = `http://localhost:8080/user-api`;
+const Exercise_API = `http://localhost:8080/user-api`;
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
+export const useUserStore = defineStore('user', () => {
+  const searchList = ref([]);
+  
+  const getSearch = function (word) {
+    axios({
+      method: "GET",
+      url: `${Exercise_API}/user/search`,
+      params: {
+        word: word,
+      },
+    }).then((response) => {
+      searchList.value = response.data;
+    });
+  };
+  return { getSearch, searchList};
+});
 
-  return { count, doubleCount, increment }
-})

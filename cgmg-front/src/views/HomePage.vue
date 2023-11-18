@@ -34,6 +34,7 @@ const logout = () => {
     user.value = null;
     localStorage.removeItem("loginUser");
     alert("로그아웃 했습니다.");
+    window.location.href = "http://localhost:5173/"
 };
 
 const loginUser = (loginUser) => {

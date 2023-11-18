@@ -3,19 +3,20 @@
         <div class="search-container" :class="{ 'expanded': isExpanded || searchTerm !== '' }">
             <input type="text" class="search-box" v-model="searchTerm" @keyup.enter="search" @focus="expandSearch"
                 @blur="collapseSearch" />
-            <button class="search-icon" @click="toggleSearch"> <i class="fas fa-search"></i></button>
+            <button class="search-icon" @click="search"> <i class="fas fa-search"></i></button>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-
+import router from '../../router';
 const searchTerm = ref('');
 const isExpanded = ref(false);
 
 function search() {
-    alert('검색어: ' + searchTerm.value);
+    router.push(`/search/${searchTerm.value}`)
+
 }
 
 function expandSearch() {
@@ -24,10 +25,6 @@ function expandSearch() {
 
 function collapseSearch() {
     isExpanded.value = false;
-}
-
-function toggleSearch() {
-    isExpanded.value = !isExpanded.value;
 }
 </script>
 

@@ -12,7 +12,12 @@ const router = createRouter({
     {
       path: '/exercise',
       name: 'exercise',
-      component: () => import('../views/ExercisePage.vue')
+      component: () => import('../views/ExercisePage.vue'),
+    },
+    {
+      path: '/exercise/:bodyPart/:exercise',
+      name: 'ExerciseDetail',
+      component: () => import('../components/exercise/ExerciseDetailComp.vue'),
     },
     {
       path: '/community',
@@ -43,6 +48,16 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: () => import("../views/ProfilePage.vue"),
+    },
+    {
+      path: "/otherProfile/:userId",
+      name: "otherProfile",
+      component: () => import("../views/OtherProfilePage.vue"),
+    },
+    {
+      path: "/search/:word",
+      name: "search",
+      component: () => import("../views/SearchPage.vue"),
     },
   ]
 })
