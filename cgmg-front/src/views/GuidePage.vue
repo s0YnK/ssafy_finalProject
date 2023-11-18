@@ -28,9 +28,9 @@ const searchByName = () => {
     const dis2 = document.getElementsByClassName("dis")[1];
     dis1.style.display = 'none';
     dis2.style.display = 'none';
-    searchDiv.style.top = '5%';
+    searchDiv.style.top = '10%';
     searchDiv.style.left = '20%';
-    let i = 1;
+    let i = 0;
     const intervalId = setInterval(function () {
         const div = document.getElementsByClassName(`a${i++}`)[0];
         div.style.top = '30%';
@@ -73,9 +73,7 @@ const searchByName = () => {
 }
 
 .search-div {
-    position: fixed;
-    top: 30%;
-    left: 50%;
+    margin: 300px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -83,12 +81,14 @@ const searchByName = () => {
 }
 
 .guide-input {
+    font-size: 20px;
     margin-top: 20px;
-    width: 180%;
+    width: 240px;
     height: 70px;
     border-radius: 30px;
     border: solid 3px var(--primary-200);
-    padding-left: 50px;
+    padding-left: 60px;
+    padding-right: 40px;
     outline: none;
     color: var(--text-100);
     background-color: rgba(255, 255, 255, 0.3);
