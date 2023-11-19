@@ -34,7 +34,7 @@ const svg = ref(null);
 const startDate = moment(new Date() - 1000 * 60 * 60 * 24 * 365);
 const endDate = moment(new Date());
 let currentDate = startDate.clone();
-let x = 50;
+let x = 0;
 let y = 0;
 const monthColors = [
     "#ff2e2e", "#ff7b2e", "#ffba26", "#e2ff26", "#74ff2b", "#29ff50",
@@ -48,15 +48,24 @@ onMounted(async () => {
                 userId: JSON.parse(localStorage.getItem("loginUser")).userId
             }
         });
-        console.log(JSON.parse(localStorage.getItem("loginUser")).userId) //로컬스토리지 가져오기
+        // console.log(JSON.parse(localStorage.getItem("loginUser")).userId) //로컬스토리지 가져오기
         data.value = response.data;
-        console.log(data.value[1])
+        // console.log(data.value[1])
         svg.value = document.getElementById("graph");
         createGraph();
         addEventListeners();
         for (let i = 0; i < data.value.length; i++) {
             const selectedDay = svg.value.querySelector(`[data-date='${data.value[i].regDate}']`);
-            selectedDay.setAttribute("exerciseName", selectedDay.getAttribute("exerciseName") + `${data.value[i].exerciseName} : ${data.value[i].cnt}\n`);
+            const monthIndex = moment(data.value[i].regDate).month();
+            selectedDay.setAttribute('fill', monthColors[monthIndex]);
+            if (i === 0) {
+                selectedDay.setAttribute("exerciseName", "");
+            }
+
+            // 기존 값이 있는 경우에만 추가
+            const currentExerciseName = selectedDay.getAttribute("exerciseName");
+            const updatedExerciseName = currentExerciseName ? currentExerciseName + `${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>` : `<hr style="margin:10px 0px;">${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>`;
+            selectedDay.setAttribute("exerciseName", updatedExerciseName);
             selectedDay.setAttribute("data-count", parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt);
             selectedDay.setAttribute("fill-opacity", getColorForCount(parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt));
         }
@@ -69,14 +78,13 @@ onMounted(async () => {
 const createGraph = () => {
     while (currentDate.isSameOrBefore(endDate, 'day')) {
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        const monthIndex = moment(currentDate).month();
         rect.setAttribute('class', 'day');
         rect.setAttribute('width', '20');
         rect.setAttribute('height', '20');
         rect.setAttribute('x', x);
         rect.setAttribute('y', y);
-        rect.setAttribute('fill', monthColors[monthIndex]);
-        rect.setAttribute('fill-opacity', '0.2');
+        rect.setAttribute('fill', 'var(--text-300)');
+        rect.setAttribute("fill-opacity", '50%');
         rect.setAttribute('data-count', '0');
         rect.setAttribute("rx", 6)
         rect.setAttribute('data-date', currentDate.format('YYYY-MM-DD'));
@@ -112,77 +120,131 @@ const handleMouseOut = (event) => {
     const rect = event.target;
     hideCountLabel();
 };
-
 const showCountLabel = (rect, count, date, content) => {
-    const label = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    // 이전에 생성된 레이블이 있다면 삭제
+    hideCountLabel();
 
-    label.setAttribute('class', 'count-label');
-    label.setAttribute('x', parseFloat(rect.getAttribute('x')) - 200);
-    label.setAttribute('y', parseFloat(rect.getAttribute('y')) - 83);
-    label.setAttribute('rx', '5')
-    label.setAttribute('fill', `#A6B1E1`);
-    label.setAttribute('width', '270');
-    label.setAttribute('height', '80');
+    // 여기서 화면의 가운데에 나타낼 것들을 설정해줄거야.
+    const label = document.createElement('div');
+    label.className = 'count-label';
 
-    text.setAttribute('class', 'count-text');
-    text.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
-    text.setAttribute('y', parseFloat(rect.getAttribute('y')) - 65);
-    text.setAttribute('font-size', '15px');
-    text.setAttribute('fill', '#292e3b');
+    // 내용 채우기
+    if (content === null) {
+        label.innerHTML = `<p>${date}에는<br> 운동을 하지 않았습니다.</p>`
+    } else {
+        label.innerHTML = `
+            <p>${date}에 <br>총 ${count}셋트를 운동했습니다.</p>
+            <p>${content}</p>
+        `;
+    }
 
-    const lines = (date + '의 총 운동량은 ' + count + '입니다.\n' + content).split('\n');
+    // 화면 가운데로 오게 만들어줄거야.
+    const rectBounds = rect.getBoundingClientRect();
+    const centerX = rectBounds.left + rectBounds.width / 2;
+    const centerY = rectBounds.top + rectBounds.height / 2;
 
-    lines.forEach((line, index) => {
-        const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        tspan.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
-        tspan.setAttribute('dy', index === 0 ? '0' : '1.2em');
-        tspan.textContent = line;
-        text.appendChild(tspan);
+    // 스크롤 위치 고려
+    const scrollX = window.scrollX || window.pageXOffset;
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    label.style.position = 'absolute';
+    label.style.left = centerX + scrollX + 'px';
+    label.style.top = centerY + scrollY + 'px';
+    label.style.transform = 'translate(-50%, -120%) scale(1)';
+    label.style.transition = 'transform 0.3s ease-in-out';
+
+    // body에 추가해줘.
+    document.body.appendChild(label);
+
+    // 애니메이션 효과 주기
+    setTimeout(() => {
+        label.style.transform = 'translate(-50%, -130%) scale(1)';
+    }, 0);
+
+    // 이벤트 리스너 추가해서 마우스가 벗어났을 때 숨기도록
+    rect.addEventListener('mouseout', () => {
+        hideCountLabel();
     });
-
-    svg.value.appendChild(label);
-    svg.value.appendChild(text);
-
-    console.log(text.textContent);
 };
 
 const hideCountLabel = () => {
-    const label = svg.value.querySelector('.count-label');
-    const text = svg.value.querySelector('.count-text');
-    if (label) {
-        label.remove();
-    }
-    if (text) {
-        text.remove();
+    const container = document.querySelector('.count-label');
+    if (container) {
+        container.remove();
     }
 };
+// const showCountLabel = (rect, count, date, content) => {
+//     const label = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+//     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+//     label.setAttribute('class', 'count-label');
+//     label.setAttribute('x', parseFloat(rect.getAttribute('x')) - 200);
+//     label.setAttribute('y', parseFloat(rect.getAttribute('y')) - 83);
+//     label.setAttribute('rx', '5')
+//     label.setAttribute('fill', `#A6B1E1`);
+//     label.setAttribute('width', '270');
+//     label.setAttribute('height', '80');
+
+//     text.setAttribute('class', 'count-text');
+//     text.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
+//     text.setAttribute('y', parseFloat(rect.getAttribute('y')) - 65);
+//     text.setAttribute('font-size', '15px');
+//     text.setAttribute('fill', '#292e3b');
+
+//     const lines = (date + '의 총 운동량은 ' + count + '입니다.\n' + content).split('\n');
+
+//     lines.forEach((line, index) => {
+//         const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+//         tspan.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
+//         tspan.setAttribute('dy', index === 0 ? '0' : '1.2em');
+//         tspan.textContent = line;
+//         text.appendChild(tspan);
+//     });
+
+//     svg.value.appendChild(label);
+//     svg.value.appendChild(text);
+
+//     // console.log(text.textContent);
+// };
+
+// const hideCountLabel = () => {
+//     const label = svg.value.querySelector('.count-label');
+//     const text = svg.value.querySelector('.count-text');
+//     if (label) {
+//         label.remove();
+//     }
+//     if (text) {
+//         text.remove();
+//     }
+// };
 
 
 const getColorForCount = (count) => {
-    switch (+count) {
+    const a = Math.floor(count / 10)
+    // console.log(a)
+    switch (a) {
         case 0:
-            return '0.2';
+            return '30%';
         case 1:
-            return '0.4';
+            return '40%';
         case 2:
-            return '0.7';
+            return '60%';
         case 3:
-            return '1.0'
+            return '80%'
         default:
-            return '1.0';
+            return '100%';
     }
 };
 </script>
 
 <style>
-.div {
-    width: 200px;
-    height: 200px;
-    position: fixed;
-    right: 0px;
-    bottom: 0px;
-    background-color: #aaaaaa;
+.count-label {
+    width: 180px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #aaaaaa;
+    background-color: var(--bg-200);
+    color: var(--text-200);
 }
 
 .cont::-webkit-scrollbar {
@@ -192,7 +254,7 @@ const getColorForCount = (count) => {
 .streak {
     width: 80%;
     height: 300px;
-    background-color: var(--bg-200);
+    background-color: var(--bg-500);
 }
 
 .label {

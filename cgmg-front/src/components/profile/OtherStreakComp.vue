@@ -186,7 +186,7 @@ const getColorForCount = (count) => {
 .streak {
     width: 80%;
     height: 300px;
-    background-color: var(--bg-200);
+    background-color: var(--primary-300);
 }
 
 .label {

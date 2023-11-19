@@ -9,10 +9,14 @@
             <th>닉네임</th>
             <th>티어</th>
         </tr>
-        <tr v-for=" search, i in store.searchList" :key="search.userId">
+        <!-- 검색 결과를 반복하면서 테이블 행을 생성 -->
+        <tr v-for="search, i in store.searchList" :key="search.userId">
             <td>{{ i + 1 }}</td>
             <td>
-                <RouterLink :to="`/otherProfile/${search.userId}`">{{ search.userId }}</RouterLink>
+                <!-- 조건에 따라 프로필 페이지로 이동할지 다른 사용자 프로필 페이지로 이동할지 결정 -->
+                <RouterLink :to="isCurrentUser(search.userId) ? '/Profile' : `/otherProfile/${search.userId}`">
+                    {{ search.userId }}
+                </RouterLink>
             </td>
             <td>{{ search.nickName }}</td>
             <td>{{ search.totalExerciseCnt }}</td>
@@ -28,8 +32,16 @@ const store = useUserStore();
 
 onMounted(() => {
     const route = useRoute()
-    store.getSearch(route.params.word); //주소에서 가져오기
+    store.getSearch(route.params.word); // 주소에서 검색어 가져오기
 });
+
+// 현재 로그인한 사용자와 검색 결과의 사용자를 비교하는 함수
+const isCurrentUser = (userId) => {
+    // 로컬 스토리지에서 로그인한 사용자 정보 가져오기
+    const loginUser = JSON.parse(localStorage.getItem("loginUser"));
+    // 현재 검색 중인 사용자와 로그인한 사용자의 아이디가 일치하는지 확인
+    return userId === loginUser.userId;
+};
 </script>
 
 <style scoped>

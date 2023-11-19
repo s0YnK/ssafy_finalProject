@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import router from "@/router";
 import axios from "axios";
+import { useUserStore } from "@/stores/user";
 
 const Exercise_API = `http://localhost:8080/exercise-api`;
 
@@ -35,6 +36,8 @@ export const useExerciseStore = defineStore('exercise', () => {
   const exerciseLog = function (exercise) {
     axios.post(Exercise_API+'/exercise/log', exercise)
     .then((response) => {
+      const store = useUserStore()
+      store.getProfile(JSON.parse(localStorage.getItem("loginUser")).userId)
       router.push('/exercise')
     });
   };

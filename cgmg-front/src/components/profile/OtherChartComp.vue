@@ -2,7 +2,7 @@
     <div style="width: 250px; height: 250px;">
         <canvas id="myChart" width="100" height="100"></canvas>
     </div>
-    <div style="width: 250px; height: 250px;">
+    <div style="width: 250px; height: 250px; display: none;">
         <canvas id="myChart2" width="100" height="100"></canvas>
     </div>
 </template>

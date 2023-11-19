@@ -1,9 +1,9 @@
 <template>
     <div class="header2">
-        <div class="user-info" v-if="getUser && userInfo">
-            <div>{{ userInfo.nickName }}</div>|
-            <div>{{ userInfo.continuedStreak }} 일째 운동중!</div>|
-            <div>{{ userInfo.totalExerciseCnt }} 레벨</div>
+        <div class="user-info" v-if="getUser">
+            <div>{{ store.profile.nickName }}</div>|
+            <div>{{ store.profile.continuedStreak }} 일째 운동중!</div>|
+            <div>{{ store.profile.totalExerciseCnt }} 레벨</div>
             <!-- 다른 정보도 추가할 예정 -->
         </div>
 
@@ -25,15 +25,33 @@
 <script setup>
 import SearchComp from './SearchComp.vue';
 import ToggleComp from './ToggleComp.vue';
-import { computed, ref, watchEffect } from "vue";
+import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from "@/stores/user";
+import { onMounted, computed, ref } from "vue";
+import axios from 'axios'
 
+const store = useUserStore()
 
-const userInfo = ref(JSON.parse(localStorage.getItem('loginUser')));
+const route = useRoute();
+const router = useRouter();
+onMounted(() => {
+    store.getProfile(JSON.parse(localStorage.getItem("loginUser")).userId)
+})
 
-// 로그인 정보가 바뀔 때마다 헤더 업데이트
-watchEffect(() => {
-    userInfo.value = JSON.parse(localStorage.getItem('loginUser'));
-});
+// 삭제하는 부분 나중에 쓸 예정
+// const deleteReview = function () {
+//     axios.delete(`http://localhost:8080/api-review/review/${route.params.id}`)
+//         .then(() => {
+//             router.push({ name: 'reviewList' })
+//         })
+// }
+
+// const userInfo = ref(JSON.parse(localStorage.getItem('loginUser')));
+
+// // 로그인 정보가 바뀔 때마다 헤더 업데이트
+// watchEffect(() => {
+//     userInfo.value = JSON.parse(localStorage.getItem('loginUser'));
+// });
 
 const props = defineProps(["user"]);
 const emits = defineEmits(["logout"]);
