@@ -132,7 +132,7 @@ const showCountLabel = (rect, count, date, content) => {
     text.setAttribute('font-size', '15px');
     text.setAttribute('fill', '#292e3b');
 
-    const lines = (date + '의 총 운동량은 ' + count + '입니다.\n' + content).split('\n');
+    const lines = (date + '의 총 운동량은 ' + count + '입니다.' + content).split('\n');
 
     lines.forEach((line, index) => {
         const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');

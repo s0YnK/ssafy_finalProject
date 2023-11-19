@@ -6,18 +6,23 @@
         <input type="text" id="keywords" class="guide-input" v-model="keyword" placeholder="모르는 운동을 검색해 보세요" />
         <button @click="searchByName" class="guide-btn dis">입력</button>
     </div>
-    <ul>
-        <YoutubeVideoListItem v-for="video in store.videos" :key="video.id.videoId" :video="video" />
+    <ul v-for="video, i in store.videos" :key="video.id.videoId" :video="video">
+        <li :class="`a${i}`">
+            <span>{{ video.snippet.title }}</span>
+            <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video.id.videoId}`"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+        </li>
     </ul>
-    <div class="a0"></div>
+    <!-- <div class="a0"></div>
     <div class="a1"></div>
-    <div class="a2"></div>
+    <div class="a2"></div> -->
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useYoutubeStore } from '@/stores/youtube'
-import YoutubeVideoListItem from '../components/youtube/YoutubeVideoListItem.vue';
 const keyword = ref('')
 const store = useYoutubeStore()
 
@@ -36,7 +41,6 @@ const searchByName = () => {
     width: 18%;
     height: 36%;
     background-color: var(--bg-200);
-    position: fixed;
     top: 100%;
     border-radius: 20px;
     opacity: 0;

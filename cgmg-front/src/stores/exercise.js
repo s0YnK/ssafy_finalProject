@@ -8,6 +8,7 @@ const Exercise_API = `http://localhost:8080/exercise-api`;
 // exercise.js
 export const useExerciseStore = defineStore('exercise', () => {
   const exerciseList = ref([]);
+  const rankList = ref([]);
   
   const getExerciseList = function (userId) {
     axios({
@@ -20,6 +21,17 @@ export const useExerciseStore = defineStore('exercise', () => {
       exerciseList.value = response.data;
     });
   };
+  const getLankList = function (part) {
+    axios({
+      method: "GET",
+      url: `${Exercise_API}/rank/${part}`,
+      params: {
+        part: part,
+      },
+    }).then((response) => {
+      rankList.value = response.data;
+    });
+  };
   const exerciseLog = function (exercise) {
     axios.post(Exercise_API+'/exercise/log', exercise)
     .then((response) => {
@@ -27,6 +39,6 @@ export const useExerciseStore = defineStore('exercise', () => {
     });
   };
 
-  return { exerciseList, getExerciseList,exerciseLog };
+  return { exerciseList, getExerciseList,exerciseLog, getLankList, rankList };
 });
 

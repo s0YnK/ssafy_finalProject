@@ -116,6 +116,7 @@ const handleMouseOut = (event) => {
 const showCountLabel = (rect, count, date, content) => {
     const label = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
     label.setAttribute('class', 'count-label');
     label.setAttribute('x', parseFloat(rect.getAttribute('x')) - 200);
     label.setAttribute('y', parseFloat(rect.getAttribute('y')) - 83);
@@ -136,10 +137,8 @@ const showCountLabel = (rect, count, date, content) => {
         const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
         tspan.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
         tspan.setAttribute('dy', index === 0 ? '0' : '1.2em');
-        if (line !== null) {
-            tspan.textContent = line;
-            text.appendChild(tspan);
-        }
+        tspan.textContent = line;
+        text.appendChild(tspan);
     });
 
     svg.value.appendChild(label);
@@ -177,6 +176,15 @@ const getColorForCount = (count) => {
 </script>
 
 <style>
+.div {
+    width: 200px;
+    height: 200px;
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    background-color: #aaaaaa;
+}
+
 .cont::-webkit-scrollbar {
     display: none;
 }
