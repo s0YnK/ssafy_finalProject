@@ -2,8 +2,8 @@ package com.ssafy.cgmg.model.dao;
 
 import java.util.List;
 
+import com.ssafy.cgmg.model.dto.ContinuedStreak;
 import com.ssafy.cgmg.model.dto.ExerciseLog;
-import com.ssafy.cgmg.model.dto.SearchCondition;
 
 public interface ExerciseLogDao {
 	
@@ -26,12 +26,15 @@ public interface ExerciseLogDao {
 		public List<ExerciseLog> selectCntToday(String userId);
 		
 		// 연속 스트릭 카운트해서 업데이트
-		public int updateContinuedStreak(String userId, String streak);
+		public int updateContinuedStreak(ContinuedStreak continuedStreak);
 		
 		// 운동 기록 작성
 		public int insertExerciseLog(ExerciseLog exerciseLog);
 		
 		// 총 운동 횟수 프로필에 업데이트
-		public int updateTotalExerciseCnt(String userId);
+		public int updateTotalExerciseCnt(ExerciseLog exerciseLog);
+		
+		// 회원탈퇴 시 운동기록 모두 삭제
+		public int deleteAllExerciseLog(String userId);
 		
 }

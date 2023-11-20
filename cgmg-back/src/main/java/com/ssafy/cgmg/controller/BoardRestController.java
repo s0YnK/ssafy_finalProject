@@ -52,9 +52,9 @@ public class BoardRestController {
 	// 게시글 등록
 	@PostMapping("/board")
 	@ApiOperation(value="게시글 등록")
-	public ResponseEntity<Board> write(Board board){
+	public ResponseEntity<Void> write(@RequestBody Board board){
 		boardService.writeBoard(board);
-		return new ResponseEntity<Board>(board, HttpStatus.CREATED);
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
 	// 게시글 수정

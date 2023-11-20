@@ -8,9 +8,11 @@ public class LikeLog {
 	private int id; // 좋아요 기록 번호
 	private String userId; // 좋아요한 회원 id
 	private int postId; // 좋아요 된 게시글 id
-	private String cntChange; // 좋아요수 변화
 
 	public LikeLog() {
+	}
+
+	public LikeLog(String userId, int postId, String cntChange) {
 	}
 
 	public int getId() {
@@ -37,17 +39,9 @@ public class LikeLog {
 		this.postId = postId;
 	}
 
-	public String getCntChange() {
-		return cntChange;
-	}
-
-	public void setCntChange(String cntChange) {
-		this.cntChange = cntChange;
-	}
-
 	@Override
 	public String toString() {
-		return "LikeLog [id=" + id + ", userId=" + userId + ", postId=" + postId + ", cntChange=" + cntChange + "]";
+		return "LikeLog [id=" + id + ", userId=" + userId + ", postId=" + postId + "]";
 	}
 
 }

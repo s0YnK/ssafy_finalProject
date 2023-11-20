@@ -40,9 +40,6 @@ public interface UserDao {
 	// 팔로우 삭제
 	int deleteFollowId(FollowLog followLog);
 	
-	// 팔로잉수 업데이트
-	int updateFollowingCnt(FollowLog followLog);
-	
-	// 팔로워수 업데이트
-	int updateFollowerCnt(FollowLog followLog);
+	// 팔로우 기록 모두 삭제
+	int deleteAllFollowLog(String userId);
 }

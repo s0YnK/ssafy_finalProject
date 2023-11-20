@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.cgmg.model.dao.ExerciseLogDao;
+import com.ssafy.cgmg.model.dto.ContinuedStreak;
 import com.ssafy.cgmg.model.dto.ExerciseLog;
 
 @Service
@@ -43,11 +44,12 @@ public class ExerciseLogServiceImpl implements ExerciseLogService {
 		
 		// 오늘 첫 운동기록할 때 연속스트릭 일수 올리기
 		if (today.size() == 0) {
-			exerciseLogDao.updateContinuedStreak(userId, "plus");
+			ContinuedStreak continuedStreak = new ContinuedStreak(userId, "plus");
+			exerciseLogDao.updateContinuedStreak(continuedStreak);
 		}
 
 		// 티어 계산을 위한 총 운동횟수 올리기
-		exerciseLogDao.updateTotalExerciseCnt(userId);
+		exerciseLogDao.updateTotalExerciseCnt(exerciseLog);
 		
 		return exerciseLogDao.insertExerciseLog(exerciseLog);
 	}

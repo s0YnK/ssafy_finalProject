@@ -14,6 +14,9 @@ public class Board {
 	private String imgSrc; // 첨부한 이미지 경로
 	private String gymAddress; // 첨부한 헬스장 주소
 
+	public Board() {
+	}
+
 	public int getId() {
 		return id;
 	}

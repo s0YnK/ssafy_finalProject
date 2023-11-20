@@ -11,7 +11,6 @@ public class FollowLog {
 	private String nickName; // 팔로잉 or 팔로워의 닉네임
 	private String totalExerciseCnt; // 팔로잉 or 팔로워의 총 운동횟수 -> 티어로 변환
 	private String profileImg; // 팔로잉 or 팔로워의 프로필이미지 경로
-	private String cntChange; // 팔로잉수 or 팔로워수 변화
 
 	public FollowLog() {
 	}
@@ -64,19 +63,11 @@ public class FollowLog {
 		this.profileImg = profileImg;
 	}
 
-	public String getCntChange() {
-		return cntChange;
-	}
-
-	public void setCntChange(String cntChange) {
-		this.cntChange = cntChange;
-	}
-
 	@Override
 	public String toString() {
 		return "FollowLog [UserId=" + UserId + ", followingId=" + followingId + ", followerId=" + followerId
 				+ ", nickName=" + nickName + ", totalExerciseCnt=" + totalExerciseCnt + ", profileImg=" + profileImg
-				+ ", cntChange=" + cntChange + "]";
+				+ "]";
 	}
 
 }

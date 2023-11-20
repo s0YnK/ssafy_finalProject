@@ -51,7 +51,7 @@
 		FROM board
 		<!-- 검색 조건 (동적쿼리)-->
 		<if test="key != 'none'">
-			WHERE ${key} LIKE CONCAT('%', #{word}, '%')
+			WHERE ${key} LIKE concat('%', #{word}, '%')
 		</if>
 		<!-- 어떤 기준으로 어떤 방향으로 정렬 -->
 		<if test="orderBy != 'none'">
@@ -80,7 +80,7 @@
 	</delete>
 	
 	<!-- 게시글 좋아요수 업데이트 -->
-	<update id="updateLikeCnt" parameterType="LikeCnt">
+	<update id="updateLikeCnt" parameterType="LikeLog">
 		UPDATE board
 		<choose>
 			<when test="cntChange == 'up'">
@@ -102,18 +102,5 @@
 						  WHERE userId = #{userId}) l
 		ON b.id = l.postId
 	</select>
-	
-	<!-- 좋아요 기록 모두 삭제 -->
-	<delete id="deleteAllLikeLog" parameterType="String">
-		DELETE FROM likeLog
-		WHERE userId = #{userId}
-	</delete>
-
-	
-	<!-- 작성한 게시글 모두 삭제 -->
-	<delete id="deleteAllBoard" parameterType="String">
-		DELETE FROM board
-		WHERE writer = #{userId}
-	</delete>
 
 </mapper>

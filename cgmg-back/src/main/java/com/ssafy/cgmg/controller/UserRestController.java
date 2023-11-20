@@ -78,16 +78,16 @@ public class UserRestController {
 	// 회원 정보 상세 조회
 	@GetMapping("/user/detail")
 	@ApiOperation(value = "회원 정보 상세", response = User.class)
-	public ResponseEntity<User> detail(String id) {
-		User user = userService.getUser(id);
+	public ResponseEntity<User> detail(String userId) {
+		User user = userService.getUser(userId);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	// 회원 탈퇴
 	@DeleteMapping("/user")
 	@ApiOperation(value = "회원 탈퇴")
-	public ResponseEntity<Integer> delete(@RequestBody String id) {
-		int result = userService.removeUser(id);
+	public ResponseEntity<Integer> delete(@RequestBody String userId) {
+		int result = userService.removeUser(userId);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.cgmg.model.dao.BoardDao;
 import com.ssafy.cgmg.model.dto.Board;
+import com.ssafy.cgmg.model.dto.LikeCnt;
 import com.ssafy.cgmg.model.dto.LikeLog;
 import com.ssafy.cgmg.model.dto.SearchCondition;
 
@@ -59,15 +60,15 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int writeLikeLog(LikeLog likeLog) {
-		likeLog.setCntChange("up");
-		boardDao.updateLikeCnt(likeLog);
+		LikeCnt likeCnt = new LikeCnt(likeLog.getPostId(), "up");
+		boardDao.updateLikeCnt(likeCnt);
 		return boardDao.insertLikeLog(likeLog);
 	}
 
 	@Override
 	public int removeLikeLog(LikeLog likeLog) {
-		likeLog.setCntChange("down");
-		boardDao.updateLikeCnt(likeLog);
+		LikeCnt likeCnt = new LikeCnt(likeLog.getPostId(), "down");
+		boardDao.updateLikeCnt(likeCnt);
 		return boardDao.deleteLikeLog(likeLog);
 	}
 

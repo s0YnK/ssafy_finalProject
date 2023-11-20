@@ -44,13 +44,12 @@
 	</select>
 	
 	<!-- 회원 정보 검색. 팔로잉 할 때 회원 검색용 -->
-    <select id="searchByUserId" parameterType="String" resultType="User">
-        SELECT userId, nickName, totalExerciseCnt, profileImg
-        FROM users
-        WHERE userId like concat('%',#{word},'%')
-        OR nickName like concat('%',#{word},'%')
-        ORDER BY LENGTH(userId) ASC
-    </select>
+	<select id="searchByUserId" parameterType="String" resultType="User">
+		SELECT userId, nickName, totalExerciseCnt, profileImg
+		FROM users
+		WHERE userId = #{word}
+		ORDER BY LENGTH(userId) ASC
+	</select>
 	
 	<!-- 내가 팔로우한 회원 목록 조회 -->
 	<select id="selectFollowingList" parameterType="String" resultType="FollowLog">
@@ -83,10 +82,32 @@
 		AND followingId = #{followingId}
 	</delete>
 	
-	<!-- 팔로우 기록 모두 삭제 -->
-	<delete id="deleteAllFollowLog" parameterType="String">
-		DELETE FROM followLog
+	<!-- 팔로잉수 업데이트 -->
+	<update id="updateFollowingCnt" parameterType="FollowLog">
+		UPDATE users
+		<choose>
+			<when test="cntChange == 'up'">
+				SET followingCnt = followingCnt + 1
+			</when>
+			<when test="cntChange == 'down'">
+				SET followingCnt = followingCnt - 1
+			</when>
+		</choose>
 		WHERE userId = #{userId}
-	</delete>
+	</update>
+	
+	<!-- 팔로워수 업데이트 -->
+	<update id="updateFollowerCnt" parameterType="FollowLog">
+		UPDATE users
+		<choose>
+			<when test="cntChange == 'up'">
+				SET followerCnt = followerCnt + 1
+			</when>
+			<when test="cntChange == 'down'">
+				SET followerCnt = followerCnt - 1
+			</when>
+		</choose>
+		WHERE userId = #{followingId}
+	</update>
 	
 </mapper>
