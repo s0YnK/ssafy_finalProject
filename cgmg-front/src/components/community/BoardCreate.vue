@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2>리뷰 작성</h2>
+        <h2>글 작성</h2>
 
         <div class="form__div">
             <div class="lain tit">

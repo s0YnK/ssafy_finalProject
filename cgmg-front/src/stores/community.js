@@ -7,6 +7,8 @@ const board_API = `http://localhost:8080/board-api`;
 
 export const useBoardStore = defineStore('board', () => {
   const boardList = ref([]);
+  const LikeList = ref([]);
+  const MyList = ref([]);
 //   const profile = ref({});
 //   const followerList = ref([]);
 //   const followingList = ref([]);
@@ -32,9 +34,12 @@ export const useBoardStore = defineStore('board', () => {
       .then(() => {
         router.push({ name: "community" });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+  };
+    //게시글 수정
+  const updateBoard = function (board) {
+    axios.put(`${board_API}/board`, board).then(() => {
+      router.push({ name: "community" });
+    });
   };
   //게시글 하나보기
     const board = ref({});
@@ -44,64 +49,65 @@ export const useBoardStore = defineStore('board', () => {
         });
     };
 
-//   const getProfile = function (userId) {
-//     axios({
-//       method: "GET",
-//       url: `${Exercise_API}/user/profile`,
-//       params: {
-//         userId: userId,
-//       },
-//     }).then((response) => {
-//       profile.value = response.data;
-//     });
-//   };
-//   const getfollower = function (userId) {
-//     axios({
-//       method: "GET",
-//       url: `${Exercise_API}/user/list/follower`,
-//       params: {
-//         userId: userId,
-//       },
-//     }).then((response) => {
-//       followerList.value = response.data;
-//     });
-//   };
-//   const getfollowing = function (userId) {
-//     axios({
-//       method: "GET",
-//       url: `${Exercise_API}/user/list/following`,
-//       params: {
-//         userId: userId,
-//       },
-//     }).then((response) => {
-//       followingList.value = response.data;
-//     });
-//   };
-//   const followAdd = function (data) {
-//     axios({
-//       method: "post",
-//       url: `${Exercise_API}/user/follow`,
-//       data: data
-//     }).then((response) => {
-//       getfollowing(data.followingId.value);
-//       getfollower(data.userId.value);
-//       window.location.href = `http://localhost:5173/otherProfile/${data.followingId}`
-//     });
-//   };
-//   const followDelete = function (data) {
-//     axios({
-//       method: "delete",
-//       url: `${Exercise_API}/user/follow`,
-//       data: data
-//     }).then((response) => {
-//       getfollower(data.userId.value);
-//       getfollowing(data.followingId.value);
-//     });
-//   };
+    //좋아요하기
+const likeBoard = function (data) {
+    axios({
+      url: `${board_API}/board/like`,
+      method: "POST",
+      data: data,
+    })
+      .then(() => {
+        console.log("성공")
+      })
+  };
+
+  //좋아요취소하기
+  const unlikeBoard = function (data) {
+    axios({
+      url: `${board_API}/board/like`,
+      method: "delete",
+      data: data,
+    })
+      .then(() => {
+        console.log("취소성공")
+      })
+  };
+
+  //좋아요한 게시물 보기
+  const getLikeList = function (userId) {
+    axios({
+      method: "GET",
+      url: `${board_API}/board/like`,
+      params: {
+        userId: userId,
+      },
+    }).then((response) => {
+      console.log("업뎃성공")
+      LikeList.value = response.data;
+    });
+  };
+  //내가만든 게시물 보기
+  const getMyList = function (userId) {
+    axios({
+      method: "GET",
+      url: `${board_API}/board/mylist`,
+      params: {
+        userId: userId,
+      },
+    }).then((response) => {
+      console.log("업뎃성공")
+      MyList.value = response.data;
+    });
+  };
+
+
 
   return { getBoardList, boardList, // 보드리스트
             createBoard, //게시물 생성
             getBoard, board, //게시물 하나보기
+            updateBoard, //게시물 수정
+            LikeList, likeBoard, getLikeList, unlikeBoard, //좋아요관련
+            MyList, getMyList //내가 만든 리스트
 };
 });
 

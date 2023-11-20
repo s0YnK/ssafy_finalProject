@@ -1,22 +1,22 @@
 <template>
     <div class="streak">
         <div class="cont">
-            <svg width="1050" height="250" class="js-calendar-graph-svg d" id="dd">
+            <svg width="1050" height="230" class="js-calendar-graph-svg d" id="dd">
                 <!-- Graph -->
                 <g transform="translate(11, 11)" id="graph"></g>
 
                 <!-- Legend for contribution levels -->
                 <g transform="translate(11, 33)">
-                    <rect class="legend" width="11" height="11" x="50" y="180" rx="3" fill="#ebedf0"></rect>
-                    <text x="65" y="191" class="legend-text">0</text>
-                    <rect class="legend" width="11" height="11" x="90" y="180" rx="3" fill="#9be9a8"></rect>
-                    <text x="105" y="191" class="legend-text">1</text>
-                    <rect class="legend" width="11" height="11" x="130" y="180" rx="3" fill="#40c463"></rect>
-                    <text x="145" y="191" class="legend-text">2</text>
-                    <rect class="legend" width="11" height="11" x="170" y="180" rx="3" fill="#40c463"></rect>
-                    <text x="185" y="191" class="legend-text">3</text>
-                    <rect class="legend" width="11" height="11" x="210" y="180" rx="3" fill="#40c463"></rect>
-                    <text x="225" y="191" class="legend-text">4+</text>
+                    <rect class="legend" width="11" height="11" x="50" y="130" rx="3" fill="#ebedf0"></rect>
+                    <text x="65" y="141" class="legend-text">0</text>
+                    <rect class="legend" width="11" height="11" x="90" y="130" rx="3" fill="#9be9a8"></rect>
+                    <text x="105" y="141" class="legend-text">1</text>
+                    <rect class="legend" width="11" height="11" x="130" y="130" rx="3" fill="#40c463"></rect>
+                    <text x="145" y="141" class="legend-text">2</text>
+                    <rect class="legend" width="11" height="11" x="170" y="130" rx="3" fill="#40c463"></rect>
+                    <text x="185" y="141" class="legend-text">3</text>
+                    <rect class="legend" width="11" height="11" x="210" y="130" rx="3" fill="#40c463"></rect>
+                    <text x="225" y="141" class="legend-text">4+</text>
                 </g>
             </svg>
         </div>

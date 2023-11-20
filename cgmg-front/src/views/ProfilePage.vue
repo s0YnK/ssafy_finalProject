@@ -57,6 +57,50 @@
             <StreakComp class="SC" />
             <div class="ctr">스트릭</div>
         </div>
+        <div>
+            <div>내가 좋아요한 게시물</div>
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>날짜</th>
+                    <th>조회수</th>
+                </tr>
+                <!-- 검색 결과를 반복하면서 테이블 행을 생성 -->
+                <tr v-for="board, i in store2.LikeList" :key="board.id">
+                    <td>{{ i + 1 }}</td>
+                    <RouterLink :to="`/community/${board.id}`">
+                        <td>{{ board.title }}</td>
+                    </RouterLink>
+                    <td>{{ board.writer }}</td>
+                    <td>{{ board.regDate }}</td>
+                    <td>{{ board.viewCnt }}</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <div>내가 작성한 게시물</div>
+            <table>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>날짜</th>
+                    <th>조회수</th>
+                </tr>
+                <!-- 검색 결과를 반복하면서 테이블 행을 생성 -->
+                <tr v-for="board, i in store2.MyList" :key="board.id">
+                    <td>{{ i + 1 }}</td>
+                    <RouterLink :to="`/community/${board.id}`">
+                        <td>{{ board.title }}</td>
+                    </RouterLink>
+                    <td>{{ board.writer }}</td>
+                    <td>{{ board.regDate }}</td>
+                    <td>{{ board.viewCnt }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 
@@ -66,10 +110,14 @@ import ChartComp from '../components/profile/ChartComp.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted } from "vue";
 import { useUserStore } from "../stores/user"
+import { useBoardStore } from '../stores/community';
+const store2 = useBoardStore();
 const store = useUserStore();
 const userId = JSON.parse(localStorage.getItem("loginUser")).userId;
 
 onMounted(() => {
+    store2.getMyList(userId);
+    store2.getLikeList(userId);
     store.getfollower(userId);
     store.getfollowing(userId);
 });

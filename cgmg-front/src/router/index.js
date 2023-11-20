@@ -62,12 +62,17 @@ const router = createRouter({
     {
       path: "/community/create",
       name: "communityCreate",
-      component: () => import('../components/community/CommunityCreate.vue'),
+      component: () => import('../components/community/BoardCreate.vue'),
+    },
+    {
+      path: "/community/update/:id",
+      name: "communityUpdate",
+      component: () => import('../components/community/BoardUpdate.vue'),
     },
     {
       path: "/community/:id",
       name: "boardDetail",
-      component: () => import('../components/community/boardDetail.vue'),
+      component: () => import('../components/community/BoardDetail.vue'),
     },
   ]
 })

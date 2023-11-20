@@ -12,13 +12,13 @@
         </tr>
         <!-- 검색 결과를 반복하면서 테이블 행을 생성 -->
         <tr v-for="board, i in store.boardList" :key="board.id">
+            <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
             <RouterLink :to="`/community/${board.id}`">
-                <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
                 <td>{{ board.title }}</td>
-                <td>{{ board.writer }}</td>
-                <td>{{ board.regDate }}</td>
-                <td>{{ board.viewCnt }}</td>
             </RouterLink>
+            <td>{{ board.writer }}</td>
+            <td>{{ board.regDate }}</td>
+            <td>{{ board.viewCnt }}</td>
         </tr>
     </table>
     <div>

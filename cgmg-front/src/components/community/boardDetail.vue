@@ -1,11 +1,13 @@
 <template>
     <div class="container">
-        <h2>상세 리뷰</h2>
+        <h2>상세글</h2>
         <br>
         <div class="title">
             <div class="title-l">
                 <div>{{ store.board.title }}</div>
             </div>
+
+            <div :class="{ 'img-b': isLike, 'img-a': !isLike }" @click="toggleLike"></div>
             <div class="title-r">
                 <div>작성자 : {{ store.board.writer }}</div>
                 <div class="date">작성일 : {{ store.board.regDate }}</div>
@@ -16,7 +18,9 @@
         <div v-if="isUser(store.board.writer)" class="buttonarea">
             <button class="button" @click="deleteBoard">글삭제</button>
             <button class="button">
-                <!-- <RouterLink :to="{ name: 'reviewUpdate' }">글수정</RouterLink> 수정할 부분 -->
+                <RouterLink :to="`/community/update/${store.board.id}`">
+                    글수정
+                </RouterLink>
             </button>
         </div>
     </div>
@@ -25,17 +29,30 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { useBoardStore } from "@/stores/community";
-import { onMounted } from "vue";
+import { onMounted, ref, watchEffect, computed } from "vue";
 import axios from 'axios'
 
-const store = useBoardStore()
 
+const store = useBoardStore()
 const route = useRoute();
 const router = useRouter();
+const loginUser = JSON.parse(localStorage.getItem("loginUser")).userId;
+const LikeList = ref([]);
+const data = ref({
+    userId: loginUser,
+    postId: route.params.id,
+})
+
 onMounted(() => {
+    const route = useRoute();
     store.getBoard(route.params.id)
     console.log(store.board.writer)
+    store.getLikeList(loginUser); //로그인유저의 라이크리스트 가져옴.
+    watchEffect(() => {
+        LikeList.value = store.LikeList;
+    });
 })
+//게시글 삭제
 const deleteBoard = function () {
     axios.delete(`http://localhost:8080/board-api/board/${route.params.id}`)
         .then(() => {
@@ -43,10 +60,41 @@ const deleteBoard = function () {
         })
 }
 
-
+//게시글이 자신인지
 const isUser = (a) => {
-    return a === JSON.parse(localStorage.getItem("loginUser")).userId;
+    return a === loginUser;
 }
+
+
+
+function likeAdd() {
+    store.likeBoard(data.value)
+    console.log(LikeList.value);
+}
+function likeDelete() {
+    store.unlikeBoard(data.value)
+}
+
+const isLike = computed(() => {
+    if (LikeList.value.length === 0) {
+        return true;
+    }
+    if (LikeList.value.every(like => like.id != route.params.id)) {
+        return true;
+    }
+    return false;
+});
+
+const toggleLike = () => {
+    if (isLike.value) {
+        likeAdd();
+    } else {
+        likeDelete();
+    }
+}
+
+
+
 
 </script>
 
@@ -120,5 +168,21 @@ button {
 
 .button:hover {
     background-color: rgb(55, 182, 140);
+}
+
+.img-b {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: url("../../assets/arm2.png");
+    background-size: cover;
+}
+
+.img-a {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: url("../../assets/arm1.png");
+    background-size: cover;
 }
 </style>
