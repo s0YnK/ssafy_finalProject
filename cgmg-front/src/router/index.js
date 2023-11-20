@@ -12,12 +12,12 @@ const router = createRouter({
     {
       path: '/exercise',
       name: 'exercise',
-      component: () => import('../views/ExercisePage.vue')
+      component: () => import('../views/ExercisePage.vue'),
     },
     {
-      path: '/community',
-      name: 'community',
-      component: () => import('../views/CommunityPage.vue')
+      path: '/exercise/:bodyPart/:exercise',
+      name: 'ExerciseDetail',
+      component: () => import('../components/exercise/ExerciseDetailComp.vue'),
     },
     {
       path: '/guide',
@@ -40,9 +40,34 @@ const router = createRouter({
       component: () => import("../views/RegistPage.vue"),
     },
     {
-      path: "/my",
-      name: "my",
-      component: () => import("../views/MyPage.vue"),
+      path: "/profile",
+      name: "profile",
+      component: () => import("../views/ProfilePage.vue"),
+    },
+    {
+      path: "/otherProfile/:userId",
+      name: "otherProfile",
+      component: () => import("../views/OtherProfilePage.vue"),
+    },
+    {
+      path: "/search/:word",
+      name: "search",
+      component: () => import("../views/SearchPage.vue"),
+    },
+    {
+      path: '/community',
+      name: 'community',
+      component: () => import('../views/CommunityPage.vue'),
+    },
+    {
+      path: "/community/create",
+      name: "communityCreate",
+      component: () => import('../components/community/CommunityCreate.vue'),
+    },
+    {
+      path: "/community/:id",
+      name: "boardDetail",
+      component: () => import('../components/community/boardDetail.vue'),
     },
   ]
 })

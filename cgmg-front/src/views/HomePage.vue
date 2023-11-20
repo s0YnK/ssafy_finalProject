@@ -34,6 +34,7 @@ const logout = () => {
     user.value = null;
     localStorage.removeItem("loginUser");
     alert("로그아웃 했습니다.");
+    window.location.href = "http://localhost:5173/"
 };
 
 const loginUser = (loginUser) => {
@@ -41,7 +42,7 @@ const loginUser = (loginUser) => {
         .then(response => {
             localStorage.setItem("loginUser", JSON.stringify(response.data));
             console.log(response.data);
-            window.location.href = "http://localhost:5173/"
+            window.location.href = "http://localhost:5173/profile"
         })
         .catch(error => {
             console.error('에러 발생:', error);
