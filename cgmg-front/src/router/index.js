@@ -20,11 +20,6 @@ const router = createRouter({
       component: () => import('../components/exercise/ExerciseDetailComp.vue'),
     },
     {
-      path: '/community',
-      name: 'community',
-      component: () => import('../views/CommunityPage.vue')
-    },
-    {
       path: '/guide',
       name: 'guide',
       component: () => import('../views/GuidePage.vue')
@@ -58,6 +53,21 @@ const router = createRouter({
       path: "/search/:word",
       name: "search",
       component: () => import("../views/SearchPage.vue"),
+    },
+    {
+      path: '/community',
+      name: 'community',
+      component: () => import('../views/CommunityPage.vue'),
+    },
+    {
+      path: "/community/create",
+      name: "communityCreate",
+      component: () => import('../components/community/CommunityCreate.vue'),
+    },
+    {
+      path: "/community/:id",
+      name: "boardDetail",
+      component: () => import('../components/community/boardDetail.vue'),
     },
   ]
 })

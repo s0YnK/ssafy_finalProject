@@ -15,7 +15,7 @@
     <ul v-for="video in store.videos" :key="video.id.videoId">
         <li class="a">
             <span>{{ video.snippet.title }}</span>
-            <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video.id.videoId}`"
+            <iframe width="400" height="220" :src="`https://www.youtube.com/embed/${video.id.videoId}`"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
@@ -54,15 +54,15 @@ const searchByName = async () => {
 
 // GPT API 호출 함수 정의
 const callGPT = async (query) => {
-    const api_key = "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";
+    const api_key = "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";
     const data = {
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-3.5-turbo-1106',
         temperature: 0.5,
         max_tokens: 500,
         top_p: 0.3,
         messages: [
             { role: 'system', content: 'You are a helpful assistant.' },
-            { role: 'user', content: 'Teach me how to do ' + query + 'and the order in which they are done. Please answer in Korean. And please tell me only the content, excluding the introduction and conclusion.' },
+            { role: 'user', content: 'Teach me how to do ' + query + 'and the order in which they are done. Please answer in Korean. And please tell me only the content, excluding the introduction and conclusion. Press the Enter key every time you finish a sentence.' },
         ],
     };
 

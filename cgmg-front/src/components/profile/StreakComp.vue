@@ -1,7 +1,7 @@
 <template>
     <div class="streak">
         <div class="cont">
-            <svg width="1450" height="250" class="js-calendar-graph-svg d" id="dd">
+            <svg width="1050" height="250" class="js-calendar-graph-svg d" id="dd">
                 <!-- Graph -->
                 <g transform="translate(11, 11)" id="graph"></g>
 
@@ -31,11 +31,14 @@ import axios from 'axios';
 
 const data = ref([]);
 const svg = ref(null);
-const startDate = moment(new Date() - 1000 * 60 * 60 * 24 * 365);
+const startDate = moment(new Date() - 1000 * 60 * 60 * 24 * 364);
 const endDate = moment(new Date());
 let currentDate = startDate.clone();
 let x = 0;
 let y = 0;
+if (startDate.isoWeekday() !== 7) {
+    y = startDate.isoWeekday() * 19;
+}
 const monthColors = [
     "#ff2e2e", "#ff7b2e", "#ffba26", "#e2ff26", "#74ff2b", "#29ff50",
     "#29ffd2", "#26c5ff", "#266afc", "#3826ff", "#a526ff", "#ff26e2"
@@ -79,23 +82,23 @@ const createGraph = () => {
     while (currentDate.isSameOrBefore(endDate, 'day')) {
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         rect.setAttribute('class', 'day');
-        rect.setAttribute('width', '20');
-        rect.setAttribute('height', '20');
+        rect.setAttribute('width', '16');
+        rect.setAttribute('height', '16');
         rect.setAttribute('x', x);
         rect.setAttribute('y', y);
         rect.setAttribute('fill', 'var(--text-300)');
         rect.setAttribute("fill-opacity", '50%');
         rect.setAttribute('data-count', '0');
-        rect.setAttribute("rx", 6)
+        rect.setAttribute("rx", 5)
         rect.setAttribute('data-date', currentDate.format('YYYY-MM-DD'));
         svg.value.appendChild(rect);
 
         currentDate.add(1, 'day');
-        y += 25;
+        y += 19;
 
         if (currentDate.isoWeekday() === 7) {
             y = 0;
-            x += 25;
+            x += 19;
         }
     }
 };
@@ -262,15 +265,9 @@ const getColorForCount = (count) => {
     overflow: scroll;
 }
 
-.day {
-    transition: 0.5s;
-    stroke-width: 2;
-    stroke: #ffffff;
-}
-
 .day:hover {
     stroke-width: 2;
-    stroke: #aaaaaa;
+    stroke: #444444;
 }
 
 .cont {
