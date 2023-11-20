@@ -120,6 +120,7 @@ onMounted(() => {
     store2.getLikeList(userId);
     store.getfollower(userId);
     store.getfollowing(userId);
+    console.log(2)
 });
 
 
