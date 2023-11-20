@@ -16,6 +16,9 @@
                 로그인</RouterLink>
             <RouterLink class="regist-link" :class="{ click: isClick[2].value }" :to="{ name: 'regist' }" v-if="!getUser"
                 @click="togggle(2)">회원가입</RouterLink>
+            <RouterLink class="my-link" :class="{ click: isClick[3].value }" :to="{ name: 'setting' }" v-if="getUser"
+                @click="togggle(3)">
+                설정</RouterLink>
         </div>
         <ToggleComp />
         <SearchComp />
@@ -61,7 +64,7 @@ const getUser = computed(() => !!props.user);
 const logout = () => {
     emits("logout");
 };
-const isClick = ref([ref(false), ref(false), ref(false), ref(false)])
+const isClick = ref([ref(false), ref(false), ref(false), ref(false), ref(false)])
 
 const togggle = function (a) {
     console.log(isClick.value[a].value)
