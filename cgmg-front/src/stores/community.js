@@ -81,12 +81,11 @@ const likeBoard = function (data) {
     axios({
       url: `${board_API}/board/like/log`,
       method: "get",
-      data: data,
+      params: data,
     })
       .then((response) => {
-        console.log(data)
         console.log(response.data)
-        // LikeLog.value = response.data;
+        LikeLog.value = response.data;
       })
   };
 

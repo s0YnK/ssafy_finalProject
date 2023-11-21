@@ -77,6 +77,28 @@ export const useUserStore = defineStore('user', () => {
     });
   };
 
-  return { getSearch, searchList, profile, getProfile, getfollower, getfollowing, followerList, followingList, followAdd, followDelete};
+      //회원정보 수정
+  const updateUser = function (data) {
+    axios.put(`${Exercise_API}/user`, data).then(() => {
+      console.log(data)
+      console.log("회원정보 수정 완료")
+      data.password = "";
+      localStorage.setItem("loginUser", JSON.stringify(data));
+      window.location.href = `http://localhost:5173/`
+    });
+  };
+    //회원 탈퇴
+  const deleteUser = function (userId) {
+    axios.delete(`${Exercise_API}/user`, id).then(() => {
+      user.value = null;
+      localStorage.removeItem("loginUser");
+      alert("회원탈퇴 완료. \n그동안 고마웠습니다.");
+      router.push('/')
+    });
+  };
+
+  return { getSearch, searchList, profile, getProfile, getfollower, getfollowing, followerList, followingList, followAdd, followDelete,
+      updateUser, deleteUser,
+  };
 });
 

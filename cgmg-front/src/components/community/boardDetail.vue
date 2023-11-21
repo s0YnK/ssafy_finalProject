@@ -1,14 +1,23 @@
 <template>
     <div class="container">
         <h2>상세글</h2>
+
+        <!-- 댓글 출력될 위치 -->
+        <div>
+            <comment-component :commentList="store2.commentList"></comment-component>
+        </div>
+
         <br>
         <div class="title">
             <div class="title-l">
                 <div>{{ store.board.title }}</div>
             </div>
 
-            <div class='img-b' @click="likeAdd"></div>
-            <div class='img-a' @click="likeDelete" v-if="!isLike()"></div>
+            <div class='img-b' @click="likeAdd" v-if="isLike()"></div>
+            <div class='img-a' @click="likeDelete" v-else></div>
+
+
+
             <div class="title-r">
                 <div>작성자 : {{ store.board.writer }}</div>
                 <div class="date">작성일 : {{ store.board.regDate }}</div>
@@ -25,18 +34,23 @@
             </button>
         </div>
         <kakaoMapApi />
+
+
+
     </div>
 </template>
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { useBoardStore } from "@/stores/community";
+import { useCommentStore } from "@/stores/comment";
 import { onMounted, ref, watchEffect, computed } from "vue";
+import CommentComponent from './CommentComponent.vue';   // CommentComponent 컴포넌트 가져오기
 import axios from 'axios'
 import kakaoMapApi from './kakaoMapApi.vue';
 
-
 const store = useBoardStore()
+const store2 = useCommentStore()
 const route = useRoute();
 const router = useRouter();
 const loginUser = JSON.parse(localStorage.getItem("loginUser")).userId;
@@ -45,11 +59,22 @@ const data = ref({
     userId: loginUser,
 })
 
+const comment = ref({
+    postId: Number(route.params.id),
+    parentId: 0,
+    content: "",
+    writer: loginUser,
+})
+
+
+//시작될때
 onMounted(() => {
     const route = useRoute();
     store.getBoard(route.params.id);
     store.likeLog(data.value);
+    store2.getCommentList(route.params.id)
 })
+
 //게시글 삭제
 const deleteBoard = function () {
     axios.delete(`http://localhost:8080/board-api/board/${route.params.id}`)
@@ -62,13 +87,19 @@ const deleteBoard = function () {
 const isUser = (a) => {
     return a === loginUser;
 }
+
+//내가 좋아요 눌렀었는지
 const isLike = () => {
-    return store.LikeLog;
+    return !store.LikeLog;
 }
 
+
+//좋아요버튼 누루는 함수
 function likeAdd() {
     store.likeBoard(data.value)
 }
+
+//좋아요 취소하는 함수
 function likeDelete() {
     store.unlikeBoard(data.value)
 }
