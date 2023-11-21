@@ -11,12 +11,16 @@
         <label for="restTime">쉬는 시간 (초):</label>
         <input type="number" v-model="restTime" /><br>
 
+        <label for="setCount">회당 간격 (초):</label>
+        <input type="number" v-model="count" /><br>
+
         <label for="setCount">반복할 셋트 수:</label>
         <input type="number" v-model="totalSets" /><br>
 
         <button @click="startCounting">시작</button>
 
         <div v-if="!resting" class="num">{{ currentDisplay }}</div>
+        <div v-if="!resting">{{ countDisplay }}</div>
         <div v-if="end">
             <button @click="exercise_log">운동 기록하기</button>
         </div>
@@ -28,6 +32,7 @@ import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useExerciseStore } from '../../stores/exercise'
 const currentDisplay = ref('');
+const countDisplay = ref('');
 
 const bodyPart = ref('');
 const exercise = ref('');
@@ -38,6 +43,7 @@ bodyPart.value = params.bodyPart;
 exercise.value = params.exercise;
 
 const exerciseStore = useExerciseStore();
+const count = ref(3);
 const maxNumber = ref(5);
 const restTime = ref(5);
 const totalSets = ref(2);
@@ -68,21 +74,36 @@ function updateNumber() {
         speak(num[currentNumber.value]);
 
         currentNumber.value++;
-        setTimeout(updateNumber, 1500);
+        setTimeout(updateNumber, count.value * 1000);
     } else {
         currentDisplay.value = setCount.value === totalSets.value ? "모든셋트 완료" : `쉬는 시간 ${setCount.value}`;
-        speak(`${setCount.value}셋트가 끝났습니다.`);
         currentNumber.value = 1;
         setCount.value++;
         if (setCount.value <= totalSets.value) {
+            speak(`${setCount.value}셋트가 끝났어요!`);
             // 쉬는 시간일 때는 30초로 설정
+            restCounting()
             setTimeout(updateNumber, restTime.value * 1000);
         } else {
+            speak(`모든 셋트가 끝났어요. 운동을 기록하세요`);
             end.value = true;
             resting.value = false;
             counting.value = false;
         }
     }
+}
+function restCounting() {
+    let countdown = restTime.value;
+
+    const countdownInterval = setInterval(() => {
+        if (countdown > 0) {
+            currentDisplay.value = `${countdown - 1}초 뒤에 시작합니다.`;
+            countdown--;
+        }
+        else {
+            clearInterval(countdownInterval);
+        }
+    }, 1000);
 }
 
 function startCounting() {
@@ -93,7 +114,7 @@ function startCounting() {
 
     const countdownInterval = setInterval(() => {
         if (countdown == 5) {
-            speak("5초뒤에 시작합니다");
+            speak(`${exercise.value}운동을 시작해요!!`);
             currentDisplay.value = `${countdown}초 뒤에 시작합니다.`;
             countdown--;
         } else if (countdown == 4) {
@@ -101,16 +122,16 @@ function startCounting() {
             countdown--;
         }
         else if (countdown == 3) {
-            speak("준비");
             currentDisplay.value = `${countdown}초 뒤에 시작합니다.`;
             countdown--;
         }
         else if (countdown == 2) {
+            speak("준비");
             currentDisplay.value = `${countdown}초 뒤에 시작합니다.`;
             countdown--;
         }
         else if (countdown == 1) {
-            speak("시작");
+            speak("시작!");
             currentDisplay.value = `${countdown}초 뒤에 시작합니다.`;
             countdown--;
         }
@@ -124,6 +145,10 @@ function startCounting() {
 function speak(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     speechSynthesis.speak(utterance);
+    // utterance.voice = speechSynthesis.getVoices()[1];
+    // utterance.volume = 0;
+    // utterance.rate = 3; // 속도
+    // utterance.pitch = 10; // 톤
 }
 </script>
 <style>

@@ -55,7 +55,7 @@ export default {
                                 'rgba(255, 159, 64, 1)'
                             ],
                             fontColor: '#000000',
-                            borderWidth: 1
+                            borderWidth: 1,
                         }]
                     },
                     options: {
@@ -63,14 +63,14 @@ export default {
                             r: {
                                 beginAtZero: true,
                                 max: maxCount + 1,
-                                fontColor: "#000000"
+                                fontColor: "#000000",
                             }
                         }
                     },
                     plugins: {
                         legend: {
                             labels: {
-                                color: "#000000"
+                                color: "#000000",
                             }
                         }
                     }

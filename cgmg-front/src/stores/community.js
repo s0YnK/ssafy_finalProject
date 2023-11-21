@@ -9,6 +9,7 @@ export const useBoardStore = defineStore('board', () => {
   const boardList = ref([]);
   const LikeList = ref([]);
   const MyList = ref([]);
+  const LikeLog = ref(false);
 //   const profile = ref({});
 //   const followerList = ref([]);
 //   const followingList = ref([]);
@@ -58,6 +59,7 @@ const likeBoard = function (data) {
     })
       .then(() => {
         console.log("성공")
+        likeLog(data)
       })
   };
 
@@ -70,6 +72,21 @@ const likeBoard = function (data) {
     })
       .then(() => {
         console.log("취소성공")
+        likeLog(data)
+      })
+  };
+
+  //좋아요로그보기
+  const likeLog = function (data) {
+    axios({
+      url: `${board_API}/board/like/log`,
+      method: "get",
+      data: data,
+    })
+      .then((response) => {
+        console.log(data)
+        console.log(response.data)
+        // LikeLog.value = response.data;
       })
   };
 
@@ -107,7 +124,8 @@ const likeBoard = function (data) {
             getBoard, board, //게시물 하나보기
             updateBoard, //게시물 수정
             LikeList, likeBoard, getLikeList, unlikeBoard, //좋아요관련
-            MyList, getMyList //내가 만든 리스트
+            MyList, getMyList, //내가 만든 리스트
+            likeLog, LikeLog,
 };
 });
 

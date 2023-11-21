@@ -7,7 +7,8 @@
                 <div>{{ store.board.title }}</div>
             </div>
 
-            <div :class="{ 'img-b': isLike, 'img-a': !isLike }" @click="toggleLike"></div>
+            <div class='img-b' @click="likeAdd"></div>
+            <div class='img-a' @click="likeDelete" v-if="!isLike()"></div>
             <div class="title-r">
                 <div>작성자 : {{ store.board.writer }}</div>
                 <div class="date">작성일 : {{ store.board.regDate }}</div>
@@ -23,6 +24,7 @@
                 </RouterLink>
             </button>
         </div>
+        <kakaoMapApi />
     </div>
 </template>
 
@@ -31,26 +33,22 @@ import { useRoute, useRouter } from 'vue-router'
 import { useBoardStore } from "@/stores/community";
 import { onMounted, ref, watchEffect, computed } from "vue";
 import axios from 'axios'
+import kakaoMapApi from './kakaoMapApi.vue';
 
 
 const store = useBoardStore()
 const route = useRoute();
 const router = useRouter();
 const loginUser = JSON.parse(localStorage.getItem("loginUser")).userId;
-const LikeList = ref([]);
 const data = ref({
+    postId: Number(route.params.id),
     userId: loginUser,
-    postId: route.params.id,
 })
 
 onMounted(() => {
     const route = useRoute();
-    store.getBoard(route.params.id)
-    console.log(store.board.writer)
-    store.getLikeList(loginUser); //로그인유저의 라이크리스트 가져옴.
-    watchEffect(() => {
-        LikeList.value = store.LikeList;
-    });
+    store.getBoard(route.params.id);
+    store.likeLog(data.value);
 })
 //게시글 삭제
 const deleteBoard = function () {
@@ -64,37 +62,16 @@ const deleteBoard = function () {
 const isUser = (a) => {
     return a === loginUser;
 }
-
-
+const isLike = () => {
+    return store.LikeLog;
+}
 
 function likeAdd() {
     store.likeBoard(data.value)
-    console.log(LikeList.value);
 }
 function likeDelete() {
     store.unlikeBoard(data.value)
 }
-
-const isLike = computed(() => {
-    if (LikeList.value.length === 0) {
-        return true;
-    }
-    if (LikeList.value.every(like => like.id != route.params.id)) {
-        return true;
-    }
-    return false;
-});
-
-const toggleLike = () => {
-    if (isLike.value) {
-        likeAdd();
-    } else {
-        likeDelete();
-    }
-}
-
-
-
 
 </script>
 

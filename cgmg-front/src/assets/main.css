@@ -42,7 +42,7 @@
   --sun:#f7f6d3;
   --invert:invert(85%);
   --header:rgba(66, 66, 66, 0.5);
-  --bg:linear-gradient(45deg, #605656, #6b6b93);
+  --bg:linear-gradient(45deg, #6f6262, #6b6b93);
 }
 
 a {

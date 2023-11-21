@@ -246,8 +246,9 @@ const getColorForCount = (count) => {
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 10px #aaaaaa;
-    background-color: var(--bg-200);
+    background-color: rgba(255, 255, 192, 0.1);
     color: var(--text-200);
+    backdrop-filter: blur(10px);
 }
 
 .cont::-webkit-scrollbar {

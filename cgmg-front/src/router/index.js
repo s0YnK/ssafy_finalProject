@@ -45,6 +45,11 @@ const router = createRouter({
       component: () => import("../views/SettingPage.vue"),
     },
     {
+      path: "/setting/upde",
+      name: "upde",
+      component: () => import("../components/setting/setting.vue"),
+    },
+    {
       path: "/profile",
       name: "profile",
       component: () => import("../views/ProfilePage.vue"),
@@ -78,6 +83,11 @@ const router = createRouter({
       path: "/community/:id",
       name: "boardDetail",
       component: () => import('../components/community/BoardDetail.vue'),
+    },
+    {
+      path: "/kakaoMapApi",
+      name: "kakaoMapApi",
+      component: () => import('../components/community/kakaoMapApi.vue'),
     },
   ]
 })

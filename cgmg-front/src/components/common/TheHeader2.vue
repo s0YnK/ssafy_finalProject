@@ -1,7 +1,8 @@
 <template>
     <div class="header2">
         <div class="user-info" v-if="getUser">
-            <div>{{ store.profile.nickName }}</div>|
+            <div>{{ store.profile.nickName }}</div>
+            <div>{{ greetings[currentGreetingIndex] }}</div>
             <div>{{ store.profile.continuedStreak }} 일째 운동중!</div>|
             <div>{{ store.profile.totalExerciseCnt }} 레벨</div>
             <!-- 다른 정보도 추가할 예정 -->
@@ -30,7 +31,7 @@ import SearchComp from './SearchComp.vue';
 import ToggleComp from './ToggleComp.vue';
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from "@/stores/user";
-import { onMounted, computed, ref } from "vue";
+import { onMounted, computed, ref, onBeforeUnmount } from "vue";
 import axios from 'axios'
 
 const store = useUserStore()
@@ -76,6 +77,25 @@ const togggle = function (a) {
         }
     }
 }
+
+
+const greetings = ref([
+    "환영합니다.",
+    "즐거운 운동되고 있나요?",
+    "오늘도 힘찬 운동 시작!",
+    "건강한 하루 시작하세요!",
+    "운동은 지금이죠. 화이팅!"
+]);
+
+let currentGreetingIndex = ref(0);
+
+const changeGreeting = () => {
+    currentGreetingIndex.value = (currentGreetingIndex.value + 1) % greetings.value.length;
+};
+
+// 5초마다 changeGreeting 함수 호출
+setInterval(changeGreeting, 5000);
+
 </script>
 
 <style scoped>

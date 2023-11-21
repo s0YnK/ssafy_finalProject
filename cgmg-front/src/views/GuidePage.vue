@@ -35,26 +35,21 @@ const gptResponse = ref(null);
 const searchByName = async () => {
     // YouTube 검색
     store.youtubeSearch(keyword.value);
-
     // 로딩 시작
     loading.value = true;
-
     // GPT API 호출
     const response = await callGPT(keyword.value);
-
     // 로딩 종료
     loading.value = false;
-
     // GPT API 응답 저장
     gptResponse.value = response;
-
     // 여기서 필요한 작업을 수행하면 돼!
     console.log('GPT API 응답:', gptResponse.value);
 };
 
 // GPT API 호출 함수 정의
 const callGPT = async (query) => {
-    const api_key = "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";
+    const api_key = "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";
     const data = {
         model: 'gpt-3.5-turbo-1106',
         temperature: 0.5,
@@ -88,14 +83,12 @@ const callGPT = async (query) => {
 }
 
 .loading img {
-    position: absolute;
     top: 40%;
     left: 45%;
     z-index: 100;
 }
 
 .loading p {
-    position: absolute;
     top: 57%;
     left: 43%;
     z-index: 101;
@@ -116,7 +109,7 @@ const callGPT = async (query) => {
     background-color: var(--bg-200);
     /* top: 100%; */
     border-radius: 20px;
-    transition: 1s;
+    /* transition: 1s; */
 }
 
 .a1 {
