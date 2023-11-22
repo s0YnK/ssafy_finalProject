@@ -26,7 +26,9 @@ export const useCommentStore = defineStore('comment', () => {
       method: "POST",
       data: comment,
     })
-      .then(() => {})
+      .then(() => {
+        getCommentList(comment.postId)
+      })
   };
     //댓글 수정
   const updatecomment = function (comment) {
@@ -34,7 +36,7 @@ export const useCommentStore = defineStore('comment', () => {
     });
   };
   //댓글 삭제
-    const deletecomment = function (data) {
+    const deletecomment = function (data, comment) {
     axios({
       url: `${comment_API}/comment`,
       method: "delete",
@@ -42,6 +44,7 @@ export const useCommentStore = defineStore('comment', () => {
     })
       .then(() => {
         console.log("삭제성공")
+        getCommentList(comment.postId)
       })
   };
 

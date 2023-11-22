@@ -40,14 +40,20 @@ const login = () => {
 
 <style scoped>
 .login-form {
+    background: var(--header2);
+    margin: 0 auto;
+    width: 450px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    margin-top: 200px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px var(--bg-400);
+    backdrop-filter: blur(10px);
 }
 
 .form {
-    width: 360px;
+    width: 350px;
     padding: 3rem 2rem;
     border-radius: 1rem;
     /* box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2); */
@@ -71,7 +77,7 @@ const login = () => {
     width: 90%;
     height: 50%;
     font-size: 1rem;
-    border: 2px solid #DADCE0;
+    border: 2px solid var(--primary-200);
     border-radius: 0.5rem;
     outline: none;
     padding: 1rem;
@@ -84,10 +90,11 @@ const login = () => {
     left: 1rem;
     top: 1.3rem;
     padding: 0 0.25rem;
-    background-color: #fff;
-    color: #80868B;
+    background-color: var(--header2);
+    color: var(--text-200);
     font-size: 1rem;
     transition: 0.3s;
+    border-radius: 10px;
 }
 
 .login-button {
@@ -96,7 +103,7 @@ const login = () => {
     padding: 0.75rem 2rem;
     outline: none;
     border: none;
-    background-color: rgb(184, 225, 211);
+    background-color: var(--primary-200);
     color: #fff;
     font-size: 1rem;
     border-radius: 10px;
@@ -105,13 +112,13 @@ const login = () => {
 }
 
 .login-button:hover {
-    background-color: rgb(55, 182, 140);
+    background-color: var(--primary-100);
 }
 
 .login-input:focus+.login-label {
     top: -0.3rem;
     left: 0.8rem;
-    color: rgb(55, 182, 140);
+    color: var(--primary-200);
     font-size: .75rem;
     font-weight: 500;
     z-index: 10;
@@ -126,6 +133,6 @@ const login = () => {
 }
 
 .login-input:focus {
-    border: 2px solid rgb(55, 182, 140)
+    border: 2px solid var(--primary-100);
 }
 </style>

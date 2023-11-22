@@ -73,6 +73,7 @@ function displayMarker(place) {
     markers.push(marker);
 
     kakao.maps.event.addListener(marker, 'click', function () {
+        console.log(place.address_name)
         infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
         infowindow.open(map, marker);
     });

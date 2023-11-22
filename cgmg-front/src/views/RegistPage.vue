@@ -1,35 +1,43 @@
 <template>
     <div class="regist-form">
         <form action="" class="form" @submit.prevent="onsubmit">
-            <h1 class="form__title">regist</h1>
+            <h1 class="form__title">회원가입</h1>
 
-            <div class="regist-div">
-                <input type="text" class="regist-input" placeholder=" " v-model="userId">
-                <label class="regist-label">ID</label>
-            </div>
-            <div class="regist-div">
-                <input type="password" class="regist-input" placeholder=" " v-model="password">
-                <label class="regist-label">Password</label>
-            </div>
+            <div class="div">
+                <div class="regist-div">
+                    <input type="text" class="regist-input" placeholder=" " v-model="userId">
+                    <label class="regist-label">ID</label>
+                </div>
+                <div class="regist-div">
+                    <input type="password" class="regist-input" placeholder=" " v-model="password">
+                    <label class="regist-label">Password</label>
+                </div>
 
-            <div class="regist-div">
-                <input type="email" class="regist-input" placeholder=" " v-model="email">
-                <label class="regist-label">이메일</label>
-            </div>
-            <div class="regist-div">
-                <input type="text" class="regist-input" placeholder=" " v-model="name">
-                <label class="regist-label">이름</label>
-            </div>
-            <div class="regist-div">
-                <input type="text" class="regist-input" placeholder=" " v-model="nickName">
-                <label class="regist-label">닉네임</label>
-            </div>
-            <div class="regist-div">
-                <input type="text" class="regist-input" placeholder=" " v-model="profileImg">
-                <label class="regist-label">프로필이미지</label>
+                <div class="regist-div">
+                    <input type="email" class="regist-input" placeholder=" " v-model="email">
+                    <label class="regist-label">이메일</label>
+                </div>
+                <div class="regist-div">
+                    <input type="text" class="regist-input" placeholder=" " v-model="name">
+                    <label class="regist-label">이름</label>
+                </div>
+                <div class="regist-div">
+                    <input type="text" class="regist-input" placeholder=" " v-model="nickName">
+                    <label class="regist-label">닉네임</label>
+                </div>
             </div>
             <input type="submit" class="regist-button" value="regist" @click="regist">
         </form>
+        <div class="imgbox">
+            <img src="../assets/1.png" class="proimg" @click="selectProfileImage(1)">
+            <img src="../assets/2.png" class="proimg" @click="selectProfileImage(2)">
+            <img src="../assets/3.png" class="proimg" @click="selectProfileImage(3)">
+            <img src="../assets/4.png" class="proimg" @click="selectProfileImage(4)">
+            <img src="../assets/5.png" class="proimg" @click="selectProfileImage(5)">
+            <img src="../assets/6.png" class="proimg" @click="selectProfileImage(6)">
+            <img src="../assets/7.png" class="proimg" @click="selectProfileImage(7)">
+            <img src="../assets/8.png" class="proimg" @click="selectProfileImage(8)">
+        </div>
     </div>
 </template>
 
@@ -44,6 +52,17 @@ const name = ref("");
 const email = ref("");
 const nickName = ref("");
 const profileImg = ref("");
+
+const selectProfileImage = (imageNumber) => {
+    profileImg.value = `${imageNumber}`;
+    console.log(profileImg.value)
+
+    // 모든 이미지에 있는 selected 클래스 제거
+    document.querySelectorAll('.proimg').forEach(img => img.classList.remove('selected'));
+
+    // 선택한 이미지에만 selected 클래스 추가
+    document.querySelector(`.proimg:nth-child(${imageNumber})`).classList.add('selected');
+};
 
 
 const regist = () => {
@@ -74,15 +93,42 @@ const regist = () => {
 </script>
 
 <style scoped>
+.proimg.selected {
+    border: 5px solid var(--text-200);
+    border-radius: 100px;
+    margin: 5px;
+}
+
+.proimg {
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+}
+
+.imgbox {
+    background-color: var(--bg-400);
+    width: 200px;
+    height: 420px;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: inset 0 0 10px var(--text-200);
+}
+
 .regist-form {
+    background: var(--header2);
+    margin: 0 auto;
+    width: 700px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    margin-top: 100px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px var(--bg-400);
+    backdrop-filter: blur(10px);
 }
 
 .form {
-    width: 360px;
+    width: 350px;
     padding: 3rem 2rem;
     border-radius: 1rem;
     /* box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2); */
@@ -106,7 +152,7 @@ const regist = () => {
     width: 90%;
     height: 50%;
     font-size: 1rem;
-    border: 2px solid #DADCE0;
+    border: 2px solid var(--primary-200);
     border-radius: 0.5rem;
     outline: none;
     padding: 1rem;
@@ -119,8 +165,8 @@ const regist = () => {
     left: 1rem;
     top: 1.3rem;
     padding: 0 0.25rem;
-    background-color: #fff;
-    color: #80868B;
+    background-color: var(--header2);
+    color: var(--text-200);
     font-size: 1rem;
     transition: 0.3s;
 }
@@ -131,7 +177,7 @@ const regist = () => {
     padding: 0.75rem 2rem;
     outline: none;
     border: none;
-    background-color: rgb(184, 225, 211);
+    background-color: var(--primary-200);
     color: #fff;
     font-size: 1rem;
     border-radius: 10px;
@@ -140,13 +186,13 @@ const regist = () => {
 }
 
 .regist-button:hover {
-    background-color: rgb(55, 182, 140);
+    background-color: var(--primary-100);
 }
 
 .regist-input:focus+.regist-label {
     top: -0.3rem;
     left: 0.8rem;
-    color: rgb(55, 182, 140);
+    color: var(--primary-200);
     font-size: .75rem;
     font-weight: 500;
     z-index: 10;
@@ -161,6 +207,6 @@ const regist = () => {
 }
 
 .regist-input:focus {
-    border: 2px solid rgb(55, 182, 140)
+    border: 2px solid var(--primary-100);
 }
 </style>

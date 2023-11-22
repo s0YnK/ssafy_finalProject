@@ -1,7 +1,7 @@
 <template>
     <div class="streak">
         <div class="cont">
-            <svg width="1050" height="230" class="js-calendar-graph-svg d" id="dd">
+            <svg width="1050" height="180" class="js-calendar-graph-svg d">
                 <!-- Graph -->
                 <g transform="translate(11, 11)" id="graph"></g>
 
@@ -176,51 +176,6 @@ const hideCountLabel = () => {
         container.remove();
     }
 };
-// const showCountLabel = (rect, count, date, content) => {
-//     const label = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-//     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-
-//     label.setAttribute('class', 'count-label');
-//     label.setAttribute('x', parseFloat(rect.getAttribute('x')) - 200);
-//     label.setAttribute('y', parseFloat(rect.getAttribute('y')) - 83);
-//     label.setAttribute('rx', '5')
-//     label.setAttribute('fill', `#A6B1E1`);
-//     label.setAttribute('width', '270');
-//     label.setAttribute('height', '80');
-
-//     text.setAttribute('class', 'count-text');
-//     text.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
-//     text.setAttribute('y', parseFloat(rect.getAttribute('y')) - 65);
-//     text.setAttribute('font-size', '15px');
-//     text.setAttribute('fill', '#292e3b');
-
-//     const lines = (date + '의 총 운동량은 ' + count + '입니다.\n' + content).split('\n');
-
-//     lines.forEach((line, index) => {
-//         const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-//         tspan.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
-//         tspan.setAttribute('dy', index === 0 ? '0' : '1.2em');
-//         tspan.textContent = line;
-//         text.appendChild(tspan);
-//     });
-
-//     svg.value.appendChild(label);
-//     svg.value.appendChild(text);
-
-//     // console.log(text.textContent);
-// };
-
-// const hideCountLabel = () => {
-//     const label = svg.value.querySelector('.count-label');
-//     const text = svg.value.querySelector('.count-text');
-//     if (label) {
-//         label.remove();
-//     }
-//     if (text) {
-//         text.remove();
-//     }
-// };
-
 
 const getColorForCount = (count) => {
     const a = Math.floor(count / 10)
@@ -256,9 +211,8 @@ const getColorForCount = (count) => {
 }
 
 .streak {
-    width: 80%;
-    height: 300px;
-    background-color: var(--bg-500);
+    height: 180px;
+    padding: 20px;
 }
 
 .label {
@@ -272,12 +226,11 @@ const getColorForCount = (count) => {
 }
 
 .cont {
-    height: 600px;
+    height: 200px;
     overflow: scroll;
 }
 
 .d {
-    margin: 20px;
-    margin-top: 60px;
+    margin-left: 20px;
 }
 </style>

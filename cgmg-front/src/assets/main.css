@@ -22,6 +22,8 @@
   --sun:#D9ACF5;
   --invert:invert(0%);
   --header:rgba(255, 255, 255, 0.5);
+  --header3:rgba(255, 255, 255, 0.2);
+  --header2:rgba(255, 255, 255, 1);
   --bg:linear-gradient(45deg, #ffeded, #cdcdff);
 }
 
@@ -42,6 +44,8 @@
   --sun:#f7f6d3;
   --invert:invert(85%);
   --header:rgba(66, 66, 66, 0.5);
+  --header3:rgba(66, 66, 66, 0.2);
+  --header2:rgba(66, 66, 66, 1);
   --bg:linear-gradient(45deg, #6f6262, #6b6b93);
 }
 

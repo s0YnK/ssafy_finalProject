@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 300px; height: 300px; background-color: var(--bg-200); transition: 0.2s; border-radius: 20px;">
+    <div class="chart">
         <canvas id="myChart" width="100" height="100"></canvas>
     </div>
 </template>
@@ -84,4 +84,18 @@ export default {
     }
 };
 </script>
+<style scoped>
+.chart {
+    width: 350px;
+    height: 350px;
+    background-color: var(--bg-200);
+    transition: 0.2s;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.chart:hover {
+    box-shadow: 0 0 10px var(--text-200)
+}
+</style>
 

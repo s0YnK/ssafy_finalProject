@@ -4,7 +4,12 @@
 
         <!-- 댓글 출력될 위치 -->
         <div>
-            <comment-component :commentList="store2.commentList"></comment-component>
+            <div>
+                <textarea v-model="newComment.content" placeholder="댓글을 입력하세요"></textarea>
+                <button @click="addComment">댓글 작성</button>
+            </div>
+            <comment-component :commentList="store2.commentList" :space="`&nbsp&nbsp`"></comment-component>
+            <!-- 댓글 입력 폼 -->
         </div>
 
         <br>
@@ -34,9 +39,6 @@
             </button>
         </div>
         <kakaoMapApi />
-
-
-
     </div>
 </template>
 
@@ -59,12 +61,13 @@ const data = ref({
     userId: loginUser,
 })
 
-const comment = ref({
-    postId: Number(route.params.id),
-    parentId: 0,
+const newComment = ref({
     content: "",
+    parentId: 0,
+    postId: Number(route.params.id),
     writer: loginUser,
-})
+
+});
 
 
 //시작될때
@@ -74,6 +77,12 @@ onMounted(() => {
     store.likeLog(data.value);
     store2.getCommentList(route.params.id)
 })
+
+const addComment = () => {
+    newComment.value.parentId = 0;
+    store2.createComment(newComment.value);
+};
+
 
 //게시글 삭제
 const deleteBoard = function () {
@@ -103,6 +112,7 @@ function likeAdd() {
 function likeDelete() {
     store.unlikeBoard(data.value)
 }
+
 
 </script>
 
