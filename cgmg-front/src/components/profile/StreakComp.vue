@@ -2,10 +2,8 @@
     <div class="streak">
         <div class="cont">
             <svg width="1050" height="180" class="js-calendar-graph-svg d">
-                <!-- Graph -->
                 <g transform="translate(11, 11)" id="graph"></g>
 
-                <!-- Legend for contribution levels -->
                 <g transform="translate(11, 33)">
                     <rect class="legend" width="11" height="11" x="50" y="130" rx="3" fill="#ebedf0"></rect>
                     <text x="65" y="141" class="legend-text">0</text>
