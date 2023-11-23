@@ -4,12 +4,27 @@ import router from "@/router";
 import axios from "axios";
 
 const Exercise_API = `http://localhost:8080/user-api`;
+const Notify_API = `http://localhost:8080/notify-api`; // 알림
 
 export const useUserStore = defineStore('user', () => {
   const searchList = ref([]);
   const profile = ref({});
   const followerList = ref([]);
   const followingList = ref([]);
+  const notifyList = ref([]); // 알림
+  
+  // 알림
+  const getNotifyList = function (userId) {
+    axios({
+      method: "GET",
+      url: `${Notify_API}/notify/list`,
+      params: {
+        userId: userId,
+      },
+    }).then((response) => {
+      notifyList.value = response.data;
+    });
+  };
   
   const getSearch = function (word) {
     axios({
@@ -60,7 +75,7 @@ export const useUserStore = defineStore('user', () => {
       method: "post",
       url: `${Exercise_API}/user/follow`,
       data: data
-    }).then((response) => {
+    }).then(() => {
       getfollowing(data.followingId.value);
       getfollower(data.userId.value);
       window.location.href = `http://localhost:5173/otherProfile/${data.followingId}`
@@ -71,11 +86,12 @@ export const useUserStore = defineStore('user', () => {
       method: "delete",
       url: `${Exercise_API}/user/follow`,
       data: data
-    }).then((response) => {
+    }).then(() => {
       getfollower(data.userId.value);
       getfollowing(data.followingId.value);
     });
   };
+
 
       //회원정보 수정
   const updateUser = function (data) {
@@ -88,17 +104,20 @@ export const useUserStore = defineStore('user', () => {
     });
   };
     //회원 탈퇴
-  const deleteUser = function (userId) {
-    axios.delete(`${Exercise_API}/user`, id).then(() => {
-      user.value = null;
-      localStorage.removeItem("loginUser");
-      alert("회원탈퇴 완료. \n그동안 고마웠습니다.");
-      router.push('/')
+  const deleteUser = function (data) {
+    axios({
+      method: "delete",
+      url: `${Exercise_API}/user`,
+      params: {
+        userId: data,
+      }
+    }).then(() => {
+      window.location.href = `http://localhost:5173/`
     });
   };
 
   return { getSearch, searchList, profile, getProfile, getfollower, getfollowing, followerList, followingList, followAdd, followDelete,
-      updateUser, deleteUser,
+      updateUser, deleteUser, getNotifyList, notifyList
   };
 });
 

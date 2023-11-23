@@ -24,7 +24,7 @@
 
 
             <div class="title-r">
-                <div>작성자 : {{ store.board.writer }}</div>
+                <div>작성자 : {{ store.board.nickName }}</div>
                 <div class="date">작성일 : {{ store.board.regDate }}</div>
             </div>
         </div>

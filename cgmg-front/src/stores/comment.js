@@ -31,10 +31,16 @@ export const useCommentStore = defineStore('comment', () => {
       })
   };
     //댓글 수정
-  const updatecomment = function (comment) {
-    axios.put(`${comment_API}/comment`, comment).then(() => {
-    });
-  };
+    const updatecomment = function (comment) {
+      axios({
+        url: `${comment_API}/comment`,
+        method: "put",
+        data: comment,
+      })
+        .then(() => {
+          getCommentList(comment.postId)
+          })
+      };
   //댓글 삭제
     const deletecomment = function (data, comment) {
     axios({

@@ -34,7 +34,7 @@ body {
   background: var(--bg);
   /* background-size: 200% 200%;
   animation: colorChange 1s ease-in-out infinite alternate, wiggle 1s ease-in-out infinite alternate; */
-  min-height: 93vh;
+  min-height: 100vh;
   transition: 0.5s;
   line-height: 1.6;
   font-family: 'AritaDotum';

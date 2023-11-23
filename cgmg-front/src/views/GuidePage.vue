@@ -3,24 +3,39 @@
     <div class="search-div">
         <h1 class="dis">운동법 가이드</h1>
         <input type="text" id="keywords" class="guide-input" v-model="keyword" placeholder="모르는 운동을 검색해 보세요" />
-        <button @click="searchByName" class="guide-btn dis">입력</button>
+        <button @click="searchByName" class="s-button dis">입력</button>
     </div>
-    <div v-if="loading" class="loading">
-        <img src="https://studentrights.sen.go.kr/images/common/loading.gif" />
-        <p>Loading...</p>
+    <div class="ans">
+        <div class="ans-left">
+            <div>{{ keyword }} 운동방법.</div>
+            <div class="ans-gpt">
+                <div>
+                    <div v-if="loading" class="loading">
+                        <div class="loading-gif">
+                            <img src="https://cdn.dribbble.com/users/1018473/screenshots/3963419/loader.gif" />
+                        </div>
+                        <p class="text">AI가 <br>{{ keyword }}의 <br>운동방법을 적고 있어요</p>
+                    </div>
+                    <div v-if="gptResponse" class="gpt-response">
+                        <div v-html="gptResponse"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ans-diveo">
+            <ul v-for="video in store.videos" :key="video.id.videoId">
+                <li class="ans-itm">
+                    <iframe width="360" height="180" :src="`https://www.youtube.com/embed/${video.id.videoId}`"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen class="ans-vid"></iframe>
+                    <div class="ans-span">
+                        <span>{{ video.snippet.title }}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div v-if="gptResponse" class="gpt-response">
-        <pre>{{ gptResponse.choices[0].message.content }}</pre>
-    </div>
-    <ul v-for="video in store.videos" :key="video.id.videoId">
-        <li class="a">
-            <span>{{ video.snippet.title }}</span>
-            <iframe width="400" height="220" :src="`https://www.youtube.com/embed/${video.id.videoId}`"
-                title="YouTube video player" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-        </li>
-    </ul>
 </template>
 
 <script setup>
@@ -37,27 +52,29 @@ const searchByName = async () => {
     store.youtubeSearch(keyword.value);
     // 로딩 시작
     loading.value = true;
+    window.scrollBy({ top: 2000, left: 0, behavior: 'smooth' });
     // GPT API 호출
     const response = await callGPT(keyword.value);
     // 로딩 종료
     loading.value = false;
     // GPT API 응답 저장
-    gptResponse.value = response;
+    gptResponse.value = response.choices[0].message.content.replace(/\n/g, "<br>");
+
     // 여기서 필요한 작업을 수행하면 돼!
     console.log('GPT API 응답:', gptResponse.value);
 };
 
 // GPT API 호출 함수 정의
 const callGPT = async (query) => {
-    const api_key = "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";
+    const api_key = "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";
     const data = {
         model: 'gpt-3.5-turbo-1106',
         temperature: 0.5,
-        max_tokens: 500,
+        max_tokens: 1000,
         top_p: 0.3,
         messages: [
             { role: 'system', content: 'You are a helpful assistant.' },
-            { role: 'user', content: 'Teach me how to do ' + query + 'and the order in which they are done. Please answer in Korean. And please tell me only the content, excluding the introduction and conclusion. Press the Enter key every time you finish a sentence.' },
+            { role: 'user', content: 'Teach me how to do ' + query + 'and the order in which they are done. Order them by number. Please also tell me what to keep in mind when exercising. write these two separately in the table of contents. Do not write down what table of contents there is. Please answer in Korean. And please tell me only the content, excluding the introduction and conclusion. Press the Enter key every time you finish a sentence.' },
         ],
     };
 
@@ -75,53 +92,37 @@ const callGPT = async (query) => {
 
     return await response.json();
 };
+
 </script>
 
 <style scoped>
+.ans-left {
+    flex-grow: 1;
+}
+
 .loading {
     text-align: center;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.loading-gif {
+    padding: 40px;
 }
 
 .loading img {
-    top: 40%;
-    left: 45%;
-    z-index: 100;
+    width: 500px;
+    border-radius: 20px;
 }
 
-.loading p {
-    top: 57%;
-    left: 43%;
-    z-index: 101;
+.text {
+    font-size: 20px;
 }
 
 .gpt-response {
     margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.a0,
-.a1,
-.a {
-    width: 18%;
-    height: 36%;
-    background-color: var(--bg-200);
-    /* top: 100%; */
+    padding: 20px;
     border-radius: 20px;
-    /* transition: 1s; */
-}
-
-.a1 {
-    left: 30%;
-}
-
-.a2 {
-    left: 50%;
-}
-
-.a3 {
-    left: 70%;
 }
 
 .search-div {
@@ -158,5 +159,64 @@ const callGPT = async (query) => {
 
 .guide-btn {
     margin-top: 20px;
+}
+
+.ans {
+    display: flex;
+    width: 1150px;
+    margin: 0 auto;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.ans-gpt {
+    background-color: var(--bg-500);
+    border-radius: 20px;
+    box-shadow: 0 0 10px var(--text-300);
+    padding: 20px;
+    margin: 70px 0;
+}
+
+.ans-diveo {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ans-vid {
+    border-radius: 20px 20px 0 0;
+}
+
+.ans-span {
+    padding: 10px;
+}
+
+.ans-itm {
+    background-color: var(--bg-500);
+    border-radius: 20px;
+    box-shadow: 0 0 10px var(--text-300);
+}
+
+ul {
+    list-style: none;
+}
+
+.s-button {
+    margin-top: 30px;
+    padding: 0.75rem 2rem;
+    outline: none;
+    border: none;
+    background-color: var(--primary-200);
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-bottom: 400px;
+}
+
+.s-button:hover {
+    background-color: var(--primary-100);
 }
 </style>

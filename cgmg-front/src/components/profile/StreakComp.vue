@@ -51,25 +51,27 @@ onMounted(async () => {
         });
         // console.log(JSON.parse(localStorage.getItem("loginUser")).userId) //로컬스토리지 가져오기
         data.value = response.data;
-        // console.log(data.value[1])
+        console.log(data.value[1])
         svg.value = document.getElementById("graph");
         createGraph();
-        addEventListeners();
-        for (let i = 0; i < data.value.length; i++) {
-            const selectedDay = svg.value.querySelector(`[data-date='${data.value[i].regDate}']`);
-            const monthIndex = moment(data.value[i].regDate).month();
-            selectedDay.setAttribute('fill', monthColors[monthIndex]);
-            if (i === 0) {
-                selectedDay.setAttribute("exerciseName", "");
-            }
+        setTimeout(() => {
+            for (let i = 0; i < data.value.length; i++) {
+                const selectedDay = svg.value.querySelector(`[data-date='${data.value[i].regDate}']`);
+                const monthIndex = moment(data.value[i].regDate).month();
+                selectedDay.setAttribute('fill', monthColors[monthIndex]);
+                if (i === 0) {
+                    selectedDay.setAttribute("exerciseName", "");
+                }
 
-            // 기존 값이 있는 경우에만 추가
-            const currentExerciseName = selectedDay.getAttribute("exerciseName");
-            const updatedExerciseName = currentExerciseName ? currentExerciseName + `${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>` : `<hr style="margin:10px 0px;">${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>`;
-            selectedDay.setAttribute("exerciseName", updatedExerciseName);
-            selectedDay.setAttribute("data-count", parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt);
-            selectedDay.setAttribute("fill-opacity", getColorForCount(parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt));
-        }
+                // 기존 값이 있는 경우에만 추가
+                const currentExerciseName = selectedDay.getAttribute("exerciseName");
+                const updatedExerciseName = currentExerciseName ? currentExerciseName + `${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>` : `<hr style="margin:10px 0px;">${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>`;
+                selectedDay.setAttribute("exerciseName", updatedExerciseName);
+                selectedDay.setAttribute("data-count", parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt);
+                selectedDay.setAttribute("fill-opacity", getColorForCount(parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt));
+            }
+            addEventListeners();
+        }, 500)
 
     } catch (error) {
         console.error('Error fetching data:', error);

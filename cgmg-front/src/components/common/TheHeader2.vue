@@ -1,28 +1,35 @@
 <template>
     <div class="header2">
-        <div class="user-info" v-if="getUser">
-            <div>{{ store.profile.nickName }}</div>
-            <div>{{ greetings[currentGreetingIndex] }}</div>
-            <div>{{ store.profile.continuedStreak }} 일째 운동중!</div>|
-            <div>{{ store.profile.totalExerciseCnt }} 레벨</div>
-            <!-- 다른 정보도 추가할 예정 -->
+        <div class="flex">
+            <RouterLink :class="{ click: isClick[0].value }" :to="{ name: 'profile' }" v-if="getUser" @click="togggle(0)">
+                <img :src="`src/assets/${store.profile.profileImg}.png`" class="iiimg">
+            </RouterLink>
+            <div class="user-info" v-if="getUser">
+                <RouterLink class="my-link" :class="{ click: isClick[0].value }" :to="{ name: 'profile' }" v-if="getUser"
+                    @click="togggle(0)">{{ store.profile.nickName }}</RouterLink>
+                <div>{{ greetings[currentGreetingIndex] }}</div>
+                <!-- 다른 정보도 추가할 예정 -->
+            </div>
         </div>
 
-        <div class="log-reg">
-            <RouterLink class="my-link" :class="{ click: isClick[0].value }" :to="{ name: 'profile' }" v-if="getUser"
-                @click="togggle(0)">마이페이지</RouterLink>
-            <a href="#" class="my-link" v-if="getUser" @click="logout">로그아웃</a>
-            <RouterLink class="login-link" :class="{ click: isClick[1].value }" :to="{ name: 'login' }" v-else
-                @click="togggle(1)">
-                로그인</RouterLink>
-            <RouterLink class="regist-link" :class="{ click: isClick[2].value }" :to="{ name: 'regist' }" v-if="!getUser"
-                @click="togggle(2)">회원가입</RouterLink>
-            <RouterLink class="my-link" :class="{ click: isClick[3].value }" :to="{ name: 'setting' }" v-if="getUser"
-                @click="togggle(3)">
-                설정</RouterLink>
+        <div class="flex">
+            <div class="log-reg">
+                <div v-if="getUser">{{ store.profile.continuedStreak }} 일째 운동중! &nbsp;&nbsp;</div>
+                <div v-if="getUser">{{ store.profile.totalExerciseCnt }}근&nbsp;&nbsp;</div>
+                <div v-if="getUser">{{ Math.floor(store.profile.totalExerciseCnt / 100) + 1 }} 레벨&nbsp;&nbsp;</div>
+                <a href="#" class="my-link" v-if="getUser" @click="logout">로그아웃&nbsp;&nbsp;</a>
+                <RouterLink class="login-link" :class="{ click: isClick[1].value }" :to="{ name: 'login' }" v-else
+                    @click="togggle(1)">
+                    로그인</RouterLink>
+                <RouterLink class="regist-link" :class="{ click: isClick[2].value }" :to="{ name: 'regist' }"
+                    v-if="!getUser" @click="togggle(2)">회원가입</RouterLink>
+                <RouterLink class="my-link" :class="{ click: isClick[3].value }" :to="{ name: 'setting' }" v-if="getUser"
+                    @click="togggle(3)">
+                    설정</RouterLink>
+            </div>
+            <ToggleComp />
+            <SearchComp />
         </div>
-        <ToggleComp />
-        <SearchComp />
     </div>
 </template>
 
@@ -36,26 +43,10 @@ import axios from 'axios'
 
 const store = useUserStore()
 
-const route = useRoute();
-const router = useRouter();
 onMounted(() => {
-    store.getProfile(JSON.parse(localStorage.getItem("loginUser")).userId)
+    store.getProfile(JSON.parse(localStorage?.getItem("loginUser"))?.userId)
 })
 
-// 삭제하는 부분 나중에 쓸 예정
-// const deleteReview = function () {
-//     axios.delete(`http://localhost:8080/api-review/review/${route.params.id}`)
-//         .then(() => {
-//             router.push({ name: 'reviewList' })
-//         })
-// }
-
-// const userInfo = ref(JSON.parse(localStorage.getItem('loginUser')));
-
-// // 로그인 정보가 바뀔 때마다 헤더 업데이트
-// watchEffect(() => {
-//     userInfo.value = JSON.parse(localStorage.getItem('loginUser'));
-// });
 
 const props = defineProps(["user"]);
 const emits = defineEmits(["logout"]);
@@ -99,9 +90,20 @@ setInterval(changeGreeting, 5000);
 </script>
 
 <style scoped>
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.iiimg {
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+}
+
 .click {
-    color: rgb(55, 182, 140);
-    margin-bottom: 10px;
+    color: var(--primary-100)
 }
 
 .login-link,
@@ -114,22 +116,21 @@ setInterval(changeGreeting, 5000);
 .login-link:hover,
 .regist-link:hover,
 .my-link:hover {
-    color: rgb(55, 182, 140);
-    margin-bottom: 5px;
+    color: var(--primary-100)
 }
 
 .header2 {
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     right: 0;
-    padding: 15px 100px;
+    padding: 15px 50px 15px 30px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     background: var(--header);
     backdrop-filter: blur(10px);
-    width: 100%;
+    /* width: 100%; */
 }
 
 .search-id-div {
@@ -140,6 +141,7 @@ setInterval(changeGreeting, 5000);
     color: var(--text-100);
 }
 
+.log-reg,
 .user-info {
     display: flex;
     gap: 10px;

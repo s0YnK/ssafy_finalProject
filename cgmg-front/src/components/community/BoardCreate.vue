@@ -18,6 +18,11 @@
             <div class="buttonarea">
                 <button @click="createBoard" class="search-btn">등록</button>
             </div>
+            <div id="map"></div>
+            <div>
+                <input v-model="searchKeyword" placeholder="장소 검색어를 입력하세요">
+                <button @click="searchPlaces">검색</button>
+            </div>
         </div>
     </div>
 </template>
@@ -27,6 +32,11 @@ import { ref, onMounted } from "vue";
 import { useBoardStore } from "@/stores/community";
 import { useRoute } from "vue-router";
 
+let map = null;
+let infowindow = null;
+let ps = null;
+const searchKeyword = ref('');
+let markers = [];
 const store = useBoardStore()
 const board = ref({
     writer: JSON.parse(localStorage.getItem("loginUser")).userId,
@@ -34,15 +44,99 @@ const board = ref({
     content: '',
     gymAddress: '',
 })
-
-onMounted(() => {
-    const route = useRoute()
+onMounted(async () => {
+    if (window.kakao && window.kakao.maps) {
+        initMap();
+    } else {
+        const script = document.createElement('script');
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=734a29260beb719461ba4d444adab62b&libraries=services`;
+        document.head.appendChild(script);
+        script.onload = () => {
+            kakao.maps.load(initMap);
+        };
+    }
 });
-const route = useRoute();
 
 const createBoard = function () {
     store.createBoard(board.value)
 }
+
+
+const initMap = () => {
+    const container = document.getElementById('map');
+    const options = {
+        center: new kakao.maps.LatLng(37.566826, 126.9786567),
+        level: 7,
+    };
+    map = new kakao.maps.Map(container, options);
+
+    infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+    ps = new kakao.maps.services.Places(map);
+
+    // 사용자의 현재 위치를 얻어오는 함수 호출
+    getCurrentLocation();
+};
+
+// 사용자의 현재 위치를 얻어오는 함수
+const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                const currentLocation = new kakao.maps.LatLng(lat, lng);
+
+                // 지도의 중심을 현재 위치로 이동
+                map.setCenter(currentLocation);
+
+                // 장소 검색 서비스 호출 (주변 검색)
+                ps.categorySearch('PM9', placesSearchCB, { useMapBounds: true });
+            },
+            (error) => {
+                console.error('Error getting user location:', error);
+            }
+        );
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
+};
+
+function placesSearchCB(data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+        for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+        }
+    }
+}
+
+function displayMarker(place) {
+    const marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x),
+    });
+
+    markers.push(marker);
+
+    kakao.maps.event.addListener(marker, 'click', function () {
+        console.log(place.address_name)
+        gymAddress.value = place.address_name;
+        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+        infowindow.open(map, marker);
+    });
+}
+
+function removeMarkers() {
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+const searchPlaces = () => {
+    removeMarkers();
+    ps.keywordSearch(searchKeyword.value, placesSearchCB, { useMapBounds: true });
+};
+
 </script>
 
 <style scoped>
@@ -131,5 +225,20 @@ label {
 
 .search-btn:click {
     background-color: rgb(184, 225, 211);
+}
+
+#map {
+    width: 600px;
+    height: 600px;
+}
+
+input {
+    margin-top: 10px;
+    padding: 5px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 5px;
 }
 </style>

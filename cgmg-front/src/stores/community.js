@@ -6,7 +6,9 @@ import axios from "axios";
 const board_API = `http://localhost:8080/board-api`;
 
 export const useBoardStore = defineStore('board', () => {
-  const boardList = ref([]);
+  // const boardList = ref([]);
+  const BestList = ref([]);
+  const OrderList = ref([]);
   const LikeList = ref([]);
   const MyList = ref([]);
   const LikeLog = ref(false);
@@ -14,13 +16,39 @@ export const useBoardStore = defineStore('board', () => {
 //   const followerList = ref([]);
 //   const followingList = ref([]);
   
-  //전체목록가져오기
-  const getBoardList = function () {
+  // //전체목록가져오기
+  // const getBoardList = function () {
+  //   axios({
+  //     method: "GET",
+  //     url: `${board_API}/board/list`,
+  //   }).then((response) => {
+  //     boardList.value = response.data;
+  //   });
+  // };
+  
+  const getOrderList = function (data) {
     axios({
       method: "GET",
-      url: `${board_API}/board/list`,
+      url: `${board_API}/board/search`,
+      params: data,
     }).then((response) => {
-      boardList.value = response.data;
+      console.log(response.data)
+      OrderList.value = response.data;
+    });
+  };
+  const getBestList = function () {
+    axios({
+      method: "GET",
+      url: `${board_API}/board/search`,
+      params: {
+        key: null,
+        word: null,
+        orderBy: "viewCnt",
+        orderByDir: "DESC",
+      },
+    }).then((response) => {
+      console.log(response.data)
+      BestList.value = response.data;
     });
   };
 
@@ -33,6 +61,7 @@ export const useBoardStore = defineStore('board', () => {
       data: board,
     })
       .then(() => {
+        console.log(board.gymAddress)
         router.push({ name: "community" });
       })
   };
@@ -118,13 +147,15 @@ const likeBoard = function (data) {
 
 
 
-  return { getBoardList, boardList, // 보드리스트
+  return { 
             createBoard, //게시물 생성
             getBoard, board, //게시물 하나보기
             updateBoard, //게시물 수정
             LikeList, likeBoard, getLikeList, unlikeBoard, //좋아요관련
             MyList, getMyList, //내가 만든 리스트
             likeLog, LikeLog,
+            getOrderList, OrderList,
+            getBestList, BestList,
 };
 });
 

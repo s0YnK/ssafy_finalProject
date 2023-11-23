@@ -14,7 +14,6 @@
             </div>
 
             <input type="submit" class="login-button" value="로그인" @click="login">
-            <p>{{ loginMessage }}</p>
         </form>
     </div>
 </template>

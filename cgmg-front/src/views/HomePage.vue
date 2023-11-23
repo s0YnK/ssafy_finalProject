@@ -7,7 +7,12 @@
             <TheHeader />
         </div>
         <div class="router-div">
-            <RouterView @login-user="loginUser" @create-user="createUser" />
+            <transition name="slide-fade" mode="out-in">
+                <!-- 래퍼 엘리먼트 추가 -->
+                <div :key="$route.fullPath">
+                    <RouterView @login-user="loginUser" @create-user="createUser" />
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -71,6 +76,19 @@ const createUser = (createUser) => {
 
 </script>
 <style scoped>
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+    transition: opacity 0.5s, transform 0.5s;
+    transition-timing-function: ease-in-out;
+    /* 가속 및 감속 조절 */
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
 .header-div {
     background-color: var(--bg-200);
     width: 250px;
@@ -86,7 +104,7 @@ const createUser = (createUser) => {
 }
 
 .router-div {
-    margin-top: 70px;
+    margin-top: 20px;
     margin-left: 250px;
 }
 </style>

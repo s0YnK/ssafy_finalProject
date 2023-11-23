@@ -1,21 +1,18 @@
 <template>
-    <div>
-        랭킹
-    </div>
-    <div>
-        <input type="button" class="search-btn" :class="{ click: isClick[0].value }" value="전체"
+    <div class="rank-div">
+        <input type="button" class="search-btn" :class="{ click: isClick[0].value }" value="전체랭킹"
             @click="changePart('total', 0)" />
-        <input type="button" class="search-btn" :class="{ click: isClick[1].value }" value="팔"
+        <input type="button" class="search-btn" :class="{ click: isClick[1].value }" value="팔근육 best"
             @click="changePart('팔', 1)" />
-        <input type="button" class="search-btn" :class="{ click: isClick[2].value }" value="어깨"
+        <input type="button" class="search-btn" :class="{ click: isClick[2].value }" value="어깨근육 best"
             @click="changePart('어깨', 2)" />
-        <input type="button" class="search-btn" :class="{ click: isClick[3].value }" value="등"
+        <input type="button" class="search-btn" :class="{ click: isClick[3].value }" value="등근육 best"
             @click="changePart('등', 3)" />
-        <input type="button" class="search-btn" :class="{ click: isClick[4].value }" value="가슴"
+        <input type="button" class="search-btn" :class="{ click: isClick[4].value }" value="가슴근육 best"
             @click="changePart('가슴', 4)" />
-        <input type="button" class="search-btn" :class="{ click: isClick[5].value }" value="복부 & 코어"
+        <input type="button" class="search-btn" :class="{ click: isClick[5].value }" value="복부 & 코어 best"
             @click="changePart('복부 & 코어', 5)" />
-        <input type="button" class="search-btn" :class="{ click: isClick[6].value }" value="하체 & 엉덩이"
+        <input type="button" class="search-btn" :class="{ click: isClick[6].value }" value="하체 & 엉덩이 best"
             @click="changePart('하체 & 엉덩이', 6)" />
     </div>
 
@@ -51,48 +48,42 @@ const changePart = function (newPart, a) {
 </script>
 
 <style scoped>
-:root {
-    --primary-100: #424874;
-    --primary-200: #A6B1E1;
-    --primary-300: #fdf6fd;
-    --accent-100: #D9ACF5;
-    --accent-200: #FFCEFE;
-    --text-100: #292524;
-    --text-200: #64748b;
-    --bg-100: #ffffff;
-    --bg-200: #f5f5f5;
-    --bg-300: #cccccc;
+.rank-div {
+    width: 1170px;
+    margin: 0 auto;
 }
 
 .search-btn {
-    margin-top: 3px;
-    margin-left: 20px;
-    margin-bottom: 3px;
+    margin: 20px;
+    margin-bottom: 40px;
     color: #fff;
-    width: 50px;
     height: 35px;
+    padding: 0 20px;
     border-radius: 10px;
-    border: solid 2px rgb(184, 225, 211);
-    background-color: rgb(184, 225, 211);
+    border: solid 2px var(--primary-200);
+    background-color: var(--primary-200);
     transition: 0.5s;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .search-btn:hover {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    width: 60px;
+    margin: 10px;
+    margin-bottom: 40px;
     height: 40px;
-    background-color: rgb(55, 182, 140);
-    border: solid 2px rgb(55, 182, 140);
+    padding: 0 30px;
+    background-color: var(--primary-100);
+    border: solid 2px var(--primary-100);
+    font-size: 14px;
 }
 
 .click {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    width: 60px;
+    margin: 10px;
+    margin-bottom: 40px;
+    padding: 0 30px;
     height: 40px;
-    background-color: rgb(55, 182, 140);
-    border: solid 2px rgb(55, 182, 140);
+    background-color: var(--primary-100);
+    border: solid 2px var(--primary-100);
+    font-size: 14px;
 }
 </style>

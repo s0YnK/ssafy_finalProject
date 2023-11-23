@@ -2,7 +2,8 @@
     <div class="header">
         <div class="main-link-div">
             <img src="../../assets/logo1.png" alt="logo" class="logo">
-            <router-link class="main-link" :to="{ name: 'main' }">천근만근</router-link>
+            <router-link class="main-link" :to="{ name: 'main' }"><img src="../../assets/천근만근.png" alt="logo2"
+                    class="logo2"></router-link>
         </div>
         <div class="sub-link-div">
             <img src="../../assets/home.gif" alt="sub-logo" class="sub-logo">
@@ -30,8 +31,6 @@
 <script setup>
 // 로그인 상태 체크
 const isLoggedIn = !!localStorage.getItem("loginUser")
-console.log(isLoggedIn)
-
 
 const islogin = () => {
     if (!isLoggedIn) {
@@ -95,5 +94,10 @@ const islogin = () => {
 
 .sub-link-div:hover .sub-link1 {
     color: var(--text-200);
+}
+
+.logo2 {
+    width: 100px;
+    filter: var(--invert2);
 }
 </style>

@@ -24,6 +24,7 @@
                 <input type="text" class="update-input" placeholder=" " v-model="data.nickName">
                 <label class="update-label">닉네임</label>
             </div>
+            <button @click="deleteId">회원탈퇴</button>
             <input type="submit" class="update-button" value="update" @click="update">
         </form>
         <div class="imgbox">
@@ -67,6 +68,13 @@ const selectProfileImage = (imageNumber) => {
 const update = function () {
     console.log(data.value)
     store.updateUser(data.value)
+}
+const deleteId = function () {
+    console.log(user.userId)
+    store.deleteUser(user.userId)
+    user.value = null;
+    localStorage.removeItem("loginUser");
+    alert("회원탈퇴 완료. \n그동안 고마웠습니다.");
 }
 </script>
 

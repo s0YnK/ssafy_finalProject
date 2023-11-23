@@ -1,14 +1,6 @@
 <template>
     <div class="chart">
-        <!-- {{ data }} -->
-        <canvas id="myChart" width="100" height="100"></canvas>
-        <div v-if="data.length == 0" class="no">
-            <div class="inf">운동을 완료하면 차트가 생겨요</div>
-            <div>
-                <div></div>
-                <router-link :to="{ name: 'exercise' }" class="sub-link1">운동하기</router-link>
-            </div>
-        </div>
+        <canvas id="myChart" width="200" height="150"></canvas>
     </div>
 </template>
 
@@ -30,7 +22,6 @@ export default {
                 });
 
                 data.value = response.data;
-                console.log(data.value.length);
 
                 // bodyPart와 cnt 추출
                 const labels = data.value.map(item => item.bodyPart);
@@ -41,7 +32,7 @@ export default {
                 // 차트 생성
                 const ctx = document.getElementById('myChart').getContext('2d');
                 const myChart = new Chart(ctx, {
-                    type: 'polarArea',
+                    type: 'bar',
                     data: {
                         labels: labels,
                         datasets: [{
@@ -89,15 +80,14 @@ export default {
             }
         });
 
-        return { data };
+        return {};
     }
 };
 </script>
 <style scoped>
 .chart {
-    position: relative;
     width: 350px;
-    height: 350px;
+    height: 260px;
     background-color: var(--bg-200);
     transition: 0.2s;
     border-radius: 20px;
@@ -106,31 +96,6 @@ export default {
 
 .chart:hover {
     box-shadow: 0 0 10px var(--text-200)
-}
-
-.no {
-    position: absolute;
-    top: 90px;
-    left: 50px;
-    font-size: 20px;
-    padding: 20px;
-}
-
-.inf {
-    margin-bottom: 20px;
-}
-
-.sub-link1 {
-    font-size: 50px;
-    margin-left: 25px;
-    color: var(--text-200);
-    padding: 15px;
-    background-color: var(--primary-200);
-    border-radius: 20px;
-}
-
-.sub-link1:hover {
-    background-color: var(--primary-100);
 }
 </style>
 
