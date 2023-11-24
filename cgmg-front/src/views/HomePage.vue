@@ -83,8 +83,14 @@ const createUser = (createUser) => {
     /* 가속 및 감속 조절 */
 }
 
-.slide-fade-enter,
+
 .slide-fade-leave-to {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.slide-fade-enter,
+.slide-fade-enter-from {
     opacity: 0;
     transform: translateY(-20px);
 }

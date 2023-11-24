@@ -1,7 +1,6 @@
 <template>
     <div class="divv">
         <div>
-            <audio ref="bgm" src="@/assets/bgm.mp3"></audio>
             <div class="video-text">{{ bodyPart }}-{{ exercise }}</div>
             <div class="inf" :class="{ 'toggle1': toggle1 }">
                 <div class="slider1">

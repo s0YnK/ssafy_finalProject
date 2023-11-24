@@ -1,9 +1,10 @@
 <template>
-    <div style="width: 250px; height: 250px;">
+    <div class="chart">
+        <!-- {{ data }} -->
         <canvas id="myChart" width="100" height="100"></canvas>
-    </div>
-    <div style="width: 250px; height: 250px; display: none;">
-        <canvas id="myChart2" width="100" height="100"></canvas>
+        <div v-if="data.length == 0" class="no">
+            <div class="inf">아직 한번도 <br>운동을 하지 않은 유저예요</div>
+        </div>
     </div>
 </template>
 
@@ -27,6 +28,7 @@ export default {
                 });
 
                 data.value = response.data;
+                console.log(data.value.length);
 
                 // bodyPart와 cnt 추출
                 const labels = data.value.map(item => item.bodyPart);
@@ -85,8 +87,49 @@ export default {
             }
         });
 
-        return {};
+        return { data };
     }
 };
 </script>
+<style scoped>
+.chart {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    background-color: var(--bg-200);
+    transition: 0.2s;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.chart:hover {
+    box-shadow: 0 0 10px var(--text-200)
+}
+
+.no {
+    position: absolute;
+    top: 90px;
+    left: 50px;
+    font-size: 20px;
+    padding: 20px;
+}
+
+.inf {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sub-link1 {
+    font-size: 50px;
+    margin-left: 25px;
+    color: var(--text-200);
+    padding: 15px;
+    background-color: var(--primary-200);
+    border-radius: 20px;
+}
+
+.sub-link1:hover {
+    background-color: var(--primary-100);
+}
+</style>
 

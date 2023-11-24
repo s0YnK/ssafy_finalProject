@@ -1,10 +1,26 @@
 <template>
     <div class="exerinf">
         <ExChartComp class="exc" />
-        <div class="slider">
-            <h1 class="slide">운동 고르고 시작하면 끝.</h1>
-            <h1 class="slide">그동안 {{ store2.profile.totalExerciseCnt }}셋트를 완료했어요</h1>
-            <h1 class="slide">레벨업까지 {{ 100 - store2.profile.totalExerciseCnt % 100 }}셋트 남았습니다.</h1>
+        <div class="left-e">
+            <div class="slider">
+                <h1 class="slide">운동 고르고 시작하면 끝.</h1>
+                <h1 class="slide">그동안 {{ store2.profile.totalExerciseCnt }}세트를 완료했어요</h1>
+                <h1 class="slide">레벨업까지 {{ 100 - store2.profile.totalExerciseCnt % 100 }}세트 남았습니다.</h1>
+            </div>
+            <div class="flex-bt">
+                <div class="flex-it">
+                    <div class="flex-te">할 운동 고르고</div>
+                    <img src="../assets/cinema-seat.png" class="flex-im">
+                </div>
+                <div class="flex-it">
+                    <div class="flex-te">세트 설정하고</div>
+                    <img src="../assets/settings.png" class="flex-im">
+                </div>
+                <div class="flex-it">
+                    <div class="flex-te">목소리를 따라 운동!</div>
+                    <img src="../assets/exercise.png" class="flex-im">
+                </div>
+            </div>
         </div>
     </div>
     <div class="buttonbox">
@@ -156,6 +172,30 @@ const showBackExercises = ref(false);
 </script>
 
 <style scoped>
+.flex-bt {
+    display: flex;
+    gap: 20px;
+}
+
+.flex-it {
+    background-color: var(--bg-500);
+    width: 25%;
+    border-radius: 20px;
+    height: 170px;
+    padding: 20px;
+    text-align: center;
+}
+
+.flex-im {
+    padding: 10px;
+    margin-top: 20px;
+    width: 60%;
+}
+
+.flex-te {
+    font-size: 18px;
+}
+
 .itm {
     position: absolute;
     left: 250px;
@@ -223,7 +263,7 @@ a button:hover {
 }
 
 .exc {
-    width: 600px;
+    width: 400px;
 }
 
 .exerinf {
@@ -248,6 +288,10 @@ a button:hover {
     border-radius: 10px;
     margin-bottom: 33px;
     margin: 20px;
+}
+
+.left-e {
+    width: 70%;
 }
 
 .slide {

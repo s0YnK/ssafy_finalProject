@@ -121,7 +121,7 @@ const regist = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 50px;
     border-radius: 20px;
     box-shadow: 0 0 10px var(--bg-400);
     backdrop-filter: blur(10px);

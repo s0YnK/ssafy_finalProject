@@ -1,11 +1,9 @@
 <template>
     <div class="streak">
         <div class="cont">
-            <svg width="1050" height="230" class="js-calendar-graph-svg d" id="dd">
-                <!-- Graph -->
+            <svg width="1050" height="180" class="js-calendar-graph-svg d">
                 <g transform="translate(11, 11)" id="graph"></g>
 
-                <!-- Legend for contribution levels -->
                 <g transform="translate(11, 33)">
                     <rect class="legend" width="11" height="11" x="50" y="130" rx="3" fill="#ebedf0"></rect>
                     <text x="65" y="141" class="legend-text">0</text>
@@ -55,25 +53,27 @@ onMounted(async () => {
         });
         // console.log(JSON.parse(localStorage.getItem("loginUser")).userId) //로컬스토리지 가져오기
         data.value = response.data;
-        // console.log(data.value[1])
+        console.log(data.value[1])
         svg.value = document.getElementById("graph");
         createGraph();
-        addEventListeners();
-        for (let i = 0; i < data.value.length; i++) {
-            const selectedDay = svg.value.querySelector(`[data-date='${data.value[i].regDate}']`);
-            const monthIndex = moment(data.value[i].regDate).month();
-            selectedDay.setAttribute('fill', monthColors[monthIndex]);
-            if (i === 0) {
-                selectedDay.setAttribute("exerciseName", "");
-            }
+        setTimeout(() => {
+            for (let i = 0; i < data.value.length; i++) {
+                const selectedDay = svg.value.querySelector(`[data-date='${data.value[i].regDate}']`);
+                const monthIndex = moment(data.value[i].regDate).month();
+                selectedDay.setAttribute('fill', monthColors[monthIndex]);
+                if (i === 0) {
+                    selectedDay.setAttribute("exerciseName", "");
+                }
 
-            // 기존 값이 있는 경우에만 추가
-            const currentExerciseName = selectedDay.getAttribute("exerciseName");
-            const updatedExerciseName = currentExerciseName ? currentExerciseName + `${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>` : `<hr style="margin:10px 0px;">${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>`;
-            selectedDay.setAttribute("exerciseName", updatedExerciseName);
-            selectedDay.setAttribute("data-count", parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt);
-            selectedDay.setAttribute("fill-opacity", getColorForCount(parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt));
-        }
+                // 기존 값이 있는 경우에만 추가
+                const currentExerciseName = selectedDay.getAttribute("exerciseName");
+                const updatedExerciseName = currentExerciseName ? currentExerciseName + `${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>` : `<hr style="margin:10px 0px;">${data.value[i].exerciseName} : ${data.value[i].cnt}셋트<br>`;
+                selectedDay.setAttribute("exerciseName", updatedExerciseName);
+                selectedDay.setAttribute("data-count", parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt);
+                selectedDay.setAttribute("fill-opacity", getColorForCount(parseInt(selectedDay.getAttribute("data-count")) + data.value[i].cnt));
+            }
+            addEventListeners();
+        }, 500)
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -178,51 +178,6 @@ const hideCountLabel = () => {
         container.remove();
     }
 };
-// const showCountLabel = (rect, count, date, content) => {
-//     const label = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-//     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-
-//     label.setAttribute('class', 'count-label');
-//     label.setAttribute('x', parseFloat(rect.getAttribute('x')) - 200);
-//     label.setAttribute('y', parseFloat(rect.getAttribute('y')) - 83);
-//     label.setAttribute('rx', '5')
-//     label.setAttribute('fill', `#A6B1E1`);
-//     label.setAttribute('width', '270');
-//     label.setAttribute('height', '80');
-
-//     text.setAttribute('class', 'count-text');
-//     text.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
-//     text.setAttribute('y', parseFloat(rect.getAttribute('y')) - 65);
-//     text.setAttribute('font-size', '15px');
-//     text.setAttribute('fill', '#292e3b');
-
-//     const lines = (date + '의 총 운동량은 ' + count + '입니다.\n' + content).split('\n');
-
-//     lines.forEach((line, index) => {
-//         const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-//         tspan.setAttribute('x', parseFloat(rect.getAttribute('x')) - 195);
-//         tspan.setAttribute('dy', index === 0 ? '0' : '1.2em');
-//         tspan.textContent = line;
-//         text.appendChild(tspan);
-//     });
-
-//     svg.value.appendChild(label);
-//     svg.value.appendChild(text);
-
-//     // console.log(text.textContent);
-// };
-
-// const hideCountLabel = () => {
-//     const label = svg.value.querySelector('.count-label');
-//     const text = svg.value.querySelector('.count-text');
-//     if (label) {
-//         label.remove();
-//     }
-//     if (text) {
-//         text.remove();
-//     }
-// };
-
 
 const getColorForCount = (count) => {
     const a = Math.floor(count / 10)
@@ -258,9 +213,8 @@ const getColorForCount = (count) => {
 }
 
 .streak {
-    width: 80%;
-    height: 300px;
-    background-color: var(--bg-500);
+    height: 180px;
+    padding: 20px;
 }
 
 .label {
@@ -274,12 +228,11 @@ const getColorForCount = (count) => {
 }
 
 .cont {
-    height: 600px;
+    height: 200px;
     overflow: scroll;
 }
 
 .d {
-    margin: 20px;
-    margin-top: 60px;
+    margin-left: 20px;
 }
 </style>

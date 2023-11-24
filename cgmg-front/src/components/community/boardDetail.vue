@@ -1,44 +1,47 @@
 <template>
     <div class="container">
-        <h2>상세글</h2>
-
-        <!-- 댓글 출력될 위치 -->
-        <div>
-            <div>
-                <textarea v-model="newComment.content" placeholder="댓글을 입력하세요"></textarea>
-                <button @click="addComment">댓글 작성</button>
+        <div class="heee">
+            <h2 style="padding: 0 20px 10px 20px; font-size: 25px;">상세글</h2>
+            <div v-if="isUser(store.board.writer)" class="buttonarea">
+                <button class="button" @click="deleteBoard">글삭제</button>
+                <button class="button">
+                    <RouterLink :to="`/community/update/${store.board.id}`">
+                        글수정
+                    </RouterLink>
+                </button>
             </div>
+        </div>
+        <div class="crf">
+            <div class="conte">
+                <div class="title">
+                    <div class="titl">
+                        <div style="padding: 20px;">
+                            <div class="title-l">{{ store.board.title }}</div>
+                            <div class="title-r"> 작성자 : {{ store.board.nickName }} | 작성일 : {{ store.board.regDate }}</div>
+                        </div>
+                        <div class='img-b' @click="likeAdd" v-if="isLike()"></div>
+                        <div class='img-a' @click="likeDelete" v-else></div>
+                    </div>
+
+                </div>
+                <div class="contenta">
+                    <div class="content">{{ store.board.content }}</div>
+                </div>
+            </div>
+
+            <kakaoMapApi />
+        </div>
+    </div>
+    <div class="commtt">
+        <h2 style="padding: 0 20px 10px 20px; font-size: 25px;">댓글</h2>
+        <div class="commitm">
+            <textarea v-model="newComment.content" placeholder="댓글을 입력하세요" class="commin"></textarea>
+            <button @click="addComment" class="btn">댓글 작성</button>
+        </div>
+        <div class="dddd">
             <comment-component :commentList="store2.commentList" :space="`&nbsp&nbsp`"></comment-component>
-            <!-- 댓글 입력 폼 -->
         </div>
-
-        <br>
-        <div class="title">
-            <div class="title-l">
-                <div>{{ store.board.title }}</div>
-            </div>
-
-            <div class='img-b' @click="likeAdd" v-if="isLike()"></div>
-            <div class='img-a' @click="likeDelete" v-else></div>
-
-
-
-            <div class="title-r">
-                <div>작성자 : {{ store.board.nickName }}</div>
-                <div class="date">작성일 : {{ store.board.regDate }}</div>
-            </div>
-        </div>
-        <div class="content">{{ store.board.content }}</div>
-
-        <div v-if="isUser(store.board.writer)" class="buttonarea">
-            <button class="button" @click="deleteBoard">글삭제</button>
-            <button class="button">
-                <RouterLink :to="`/community/update/${store.board.id}`">
-                    글수정
-                </RouterLink>
-            </button>
-        </div>
-        <kakaoMapApi />
+        <!-- 댓글 입력 폼 -->
     </div>
 </template>
 
@@ -117,47 +120,93 @@ function likeDelete() {
 </script>
 
 <style scoped>
-.container {
-    max-width: 800px;
-    margin: 20px auto;
+.dddd {
+    box-shadow: 0 0 0 4px var(--text-200);
+    border-radius: 10px;
+    padding: 10px;
 }
 
-.title {
+.commin {
+    flex-grow: 1;
+    background-color: var(--header);
+    padding: 15px;
+    border-radius: 10px;
+    border: solid 2px var(--primary-200);
+    font-size: 16px;
+}
+
+.btn {
+    font-size: 18px;
+    color: #fff;
+    width: 118px;
+    height: 50px;
+    border-radius: 10px;
+    border: solid 2px var(--primary-100);
+    background-color: var(--primary-100);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.heee {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    width: 1120px;
+    margin: 20px auto;
+    background-color: var(--header);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.crf {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.conte {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.titl {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    padding-right: 20px;
 }
 
 .title-l {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 25px;
-    width: 500px;
-    background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgb(142, 195, 177) 100%);
-    padding: 10px;
-    padding-bottom: 5px;
-    border-radius: 10px;
+    color: #000;
 }
 
 .title-r {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
+    color: #000;
 }
 
-.date {
-    font-size: 12px;
-}
-
-.content {
-    background-color: rgb(208, 240, 236);
-    width: 97%;
-    min-height: 200px;
+.contenta {
     padding: 20px;
+    background-color: var(--primary-200);
     border-radius: 10px;
-    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.commtt {
+    width: 1120px;
+    margin: 20px auto;
+    background-color: var(--header3);
+    padding: 20px;
+    border-radius: 20px;
+
 }
 
 a,
@@ -170,22 +219,25 @@ button {
     display: flex;
     justify-content: end;
     gap: 20px;
+    height: 50px;
 }
 
 .button {
     padding: 0.75rem 2rem;
     outline: none;
     border: none;
-    background-color: rgb(184, 225, 211);
+    background-color: var(--primary-200);
     color: #fff;
     font-size: 1rem;
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
+    font-family: 'AritaDotum';
+    ;
 }
 
 .button:hover {
-    background-color: rgb(55, 182, 140);
+    background-color: var(--primary-100)
 }
 
 .img-b {
@@ -202,5 +254,13 @@ button {
     border-radius: 10px;
     background: url("../../assets/arm1.png");
     background-size: cover;
+}
+
+.commitm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 </style>

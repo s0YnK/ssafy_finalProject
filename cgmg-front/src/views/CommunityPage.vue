@@ -31,10 +31,15 @@
             </div>
         </div>
         <div class="nav">
+            <div class="com-inf">
+                <h2 class="com-inf-ti">커뮤니티</h2>
+                장소를 공유하고 <br>
+                운동메이트를 찾아봐요!
+            </div>
+            <pop />
             <div class="cre">
                 <RouterLink :to="{ name: 'communityCreate' }">글 작성하러 가기</RouterLink>
             </div>
-            <pop />
         </div>
     </div>
 </template>
@@ -124,11 +129,32 @@ const nextPage = () => {
 } */
 
 .cre {
-    background-color: var(--header);
+    background-color: var(--primary-300);
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 20px 20px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 20px;
+    color: var(--text-200);
+    transition: 0.2s;
+}
+
+.cre:hover {
+    background-color: var(--primary-100);
+    color: var(--bg-100);
+}
+
+.com-inf {
+    background-color: var(--primary-300);
+    border-radius: 10px;
+    padding: 30px 20px;
     margin-bottom: 10px;
     text-align: center;
+}
+
+.com-inf-ti {
+    font-size: 30px;
+    margin-bottom: 30px;
 }
 
 .nav {

@@ -1,27 +1,32 @@
 <template>
     <div class="container">
-        <h2>글 작성</h2>
+        <h2 class="he">글 작성</h2>
 
-        <div class="form__div">
-            <div class="lain tit">
-                <label for="title" class="form__label">제목</label>
-                <input type="text" id="title" v-model="board.title" class="form__input input">
+        <div class="crf">
+            <div class="form__div">
+                <div class="lain tit">
+                    <label for="title" class="form__label">제목</label>
+                    <input type="text" id="title" v-model="board.title" class="form__input input">
+                </div>
+                <div class="lain">
+                    <label for="content" class="form__label">내용</label>
+                    <textarea id="content" cols="30" rows="10" v-model="board.content" class="form__input input"></textarea>
+                </div>
+                <div class="lain">
+                    <label for="gymAddress" class="form__label">장소 선택</label>
+                    <input type="text" id="gymAddress" v-model="board.gymAddress" class="form__input input"
+                        placeholder="해당 주소가 맞는지 확인해주세요">
+                </div>
+                <div class="buttonarea">
+                    <button @click="createBoard" class="search-btn">등록</button>
+                </div>
             </div>
-            <div class="lain">
-                <label for="gymAddress" class="form__label">장소 선택</label>
-                <input type="text" id="gymAddress" v-model="board.gymAddress" class="form__input input">
-            </div>
-            <div class="lain">
-                <label for="content" class="form__label">내용</label>
-                <textarea id="content" cols="30" rows="10" v-model="board.content" class="form__input textarea"></textarea>
-            </div>
-            <div class="buttonarea">
-                <button @click="createBoard" class="search-btn">등록</button>
-            </div>
-            <div id="map"></div>
             <div>
-                <input v-model="searchKeyword" placeholder="장소 검색어를 입력하세요">
-                <button @click="searchPlaces">검색</button>
+                <div class="crf">
+                    <input v-model="searchKeyword" placeholder="장소 검색어를 입력하세요" class="iiii">
+                    <button @click="searchPlaces" class="btn">검색</button>
+                </div>
+                <div id="map"></div>
             </div>
         </div>
     </div>
@@ -141,79 +146,93 @@ const searchPlaces = () => {
 
 <style scoped>
 .container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
-    border-radius: 8px;
+    width: 1000px;
+    background-color: var(--header);
+    border-radius: 20px;
+    margin: 0 auto;
     padding: 20px;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.he {
+    padding: 20px;
 }
+
+.crf {
+    display: flex;
+    gap: 20px;
+}
+
+.form__div {
+    background-color: var(--primary-200);
+    border-radius: 20px;
+    padding: 20px;
+    flex-grow: 1;
+
+}
+
+.form__label {
+    font-size: 24px;
+    width: 100px;
+    text-align: center;
+}
+
+.iiii {
+    background-color: var(--header);
+    padding: 15px;
+    border-radius: 10px;
+    border: solid 2px var(--header);
+    font-size: 16px;
+    margin-bottom: 20px;
+    width: 230px;
+}
+
+.form-group {}
 
 .lain {
     display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
-label {
-    width: 40px;
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    margin-right: 20px;
-    font-size: 20px;
-}
+label {}
 
 .input {
-    font-size: 16px;
-    margin-bottom: 40px;
-    width: 90%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    border-radius: 0;
-    transition: border-bottom 0.3s;
-}
-
-.tit {
-    margin-top: 40px;
-}
-
-.textarea {
-    width: 90%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
+    background-color: var(--header);
+    padding: 20px;
     border-radius: 10px;
-    margin-bottom: 40px;
-}
-
-.input:focus {
-    outline: none;
-    border-bottom: 1px solid #6ed8b7;
-}
-
-.textarea:focus {
-    outline: none;
-    border: 1px solid #6ed8b7;
+    border: solid 2px var(--header);
+    flex-grow: 1;
+    font-size: 16px;
+    margin-bottom: 20px;
 }
 
 .buttonarea {
-    width: 800px;
+    height: 100px;
     display: flex;
     justify-content: center;
+    align-items: end;
 }
 
 .search-btn {
-    font-size: 20px;
+    font-size: 18px;
     color: #fff;
     width: 120px;
     height: 50px;
     border-radius: 10px;
-    border: solid 2px rgb(184, 225, 211);
-    background-color: rgb(184, 225, 211);
+    border: solid 2px var(--primary-100);
+    background-color: var(--primary-100);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.btn {
+    font-size: 18px;
+    color: #fff;
+    width: 118px;
+    height: 50px;
+    border-radius: 10px;
+    border: solid 2px var(--primary-100);
+    background-color: var(--primary-100);
     transition: 0.2s;
     cursor: pointer;
 }
@@ -228,8 +247,10 @@ label {
 }
 
 #map {
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 500px;
+    border-radius: 20px;
+    border: solid 2px var(--primary-200);
 }
 
 input {

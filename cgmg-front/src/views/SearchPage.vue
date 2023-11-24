@@ -1,27 +1,27 @@
 <template>
-    <div>
+    <h2 style="margin: 50px auto 20px; width: 90px;">
         검색결과
+    </h2>
+    <div class="sea-div">
+        <table>
+            <div class="table">
+                <div style="width: 70px;">번호</div>
+                <div style="width: 100px; text-align: center;">아이디</div>
+                <div style="width: 100px; text-align: center;">닉네임</div>
+                <div style="width: 70px; text-align: end">티어</div>
+            </div>
+            <div v-for="search, i in store.searchList" :key="search.userId" class="tablee">
+                <div style="width: 70px;">{{ i + 1 }}</div>
+                <div style="width: 100px; text-align: center;">
+                    <RouterLink :to="isCurrentUser(search.userId) ? '/Profile' : `/otherProfile/${search.userId}`">
+                        {{ search.userId }}
+                    </RouterLink>
+                </div>
+                <div style="width: 100px; text-align: center;">{{ search.nickName }}</div>
+                <div style="width: 70px; text-align: end;">{{ search.totalExerciseCnt }}</div>
+            </div>
+        </table>
     </div>
-    <table>
-        <tr>
-            <th>번호</th>
-            <th>아이디</th>
-            <th>닉네임</th>
-            <th>티어</th>
-        </tr>
-        <!-- 검색 결과를 반복하면서 테이블 행을 생성 -->
-        <tr v-for="search, i in store.searchList" :key="search.userId">
-            <td>{{ i + 1 }}</td>
-            <td>
-                <!-- 조건에 따라 프로필 페이지로 이동할지 다른 사용자 프로필 페이지로 이동할지 결정 -->
-                <RouterLink :to="isCurrentUser(search.userId) ? '/Profile' : `/otherProfile/${search.userId}`">
-                    {{ search.userId }}
-                </RouterLink>
-            </td>
-            <td>{{ search.nickName }}</td>
-            <td>{{ search.totalExerciseCnt }}</td>
-        </tr>
-    </table>
 </template>
 
 <script setup>
@@ -45,16 +45,31 @@ const isCurrentUser = (userId) => {
 </script>
 
 <style scoped>
-:root {
-    --primary-100: #424874;
-    --primary-200: #A6B1E1;
-    --primary-300: #fdf6fd;
-    --accent-100: #D9ACF5;
-    --accent-200: #FFCEFE;
-    --text-100: #292524;
-    --text-200: #64748b;
-    --bg-100: #ffffff;
-    --bg-200: #f5f5f5;
-    --bg-300: #cccccc;
+.sea-div {
+    width: 390px;
+    background-color: var(--header3);
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.table {
+    background-color: var(--bg-500);
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    display: flex;
+}
+
+.tablee {
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    display: flex;
+    margin-top: 10px;
+}
+
+.tablee:hover {
+    background-color: var(--header);
 }
 </style>

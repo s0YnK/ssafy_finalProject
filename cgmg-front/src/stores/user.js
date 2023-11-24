@@ -9,6 +9,7 @@ const Notify_API = `http://localhost:8080/notify-api`; // 알림
 export const useUserStore = defineStore('user', () => {
   const searchList = ref([]);
   const profile = ref({});
+  const profileo = ref({});
   const followerList = ref([]);
   const followingList = ref([]);
   const notifyList = ref([]); // 알림
@@ -46,6 +47,17 @@ export const useUserStore = defineStore('user', () => {
       },
     }).then((response) => {
       profile.value = response.data;
+    });
+  };
+  const getProfileo = function (userId) {
+    axios({
+      method: "GET",
+      url: `${Exercise_API}/user/profile`,
+      params: {
+        userId: userId,
+      },
+    }).then((response) => {
+      profileo.value = response.data;
     });
   };
   const getfollower = function (userId) {
@@ -117,7 +129,7 @@ export const useUserStore = defineStore('user', () => {
   };
 
   return { getSearch, searchList, profile, getProfile, getfollower, getfollowing, followerList, followingList, followAdd, followDelete,
-      updateUser, deleteUser, getNotifyList, notifyList
+      updateUser, deleteUser, getNotifyList, notifyList, getProfileo,profileo
   };
 });
 

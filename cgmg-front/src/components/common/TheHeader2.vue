@@ -2,7 +2,7 @@
     <div class="header2">
         <div class="flex">
             <RouterLink :class="{ click: isClick[0].value }" :to="{ name: 'profile' }" v-if="getUser" @click="togggle(0)">
-                <img :src="`src/assets/${store.profile.profileImg}.png`" class="iiimg">
+                <img :src="`src/assets/${store?.profile?.profileImg}.png`" class="iiimg">
             </RouterLink>
             <div class="user-info" v-if="getUser">
                 <RouterLink class="my-link" :class="{ click: isClick[0].value }" :to="{ name: 'profile' }" v-if="getUser"
@@ -44,7 +44,7 @@ import axios from 'axios'
 const store = useUserStore()
 
 onMounted(() => {
-    store.getProfile(JSON.parse(localStorage?.getItem("loginUser"))?.userId)
+    store.getProfile(JSON.parse(localStorage?.getItem("loginUser")).userId)
 })
 
 
