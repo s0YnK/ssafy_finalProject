@@ -35,9 +35,10 @@ public interface BoardService {
 	// 게시글 좋아요 취소
 	int removeLikeLog(LikeLog likeLog);
 	
+	// 게시글 좋아요 기록 조회
+	boolean getLikeLog(LikeLog likeLog);
+	
 	// 게시글 좋아요 목록 조회
 	List<Board> getLikedBoard(String userId);
-
-	// 댓글 관련 CRUD
 
 }

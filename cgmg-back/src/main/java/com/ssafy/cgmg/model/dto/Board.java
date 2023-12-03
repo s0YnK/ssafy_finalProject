@@ -7,6 +7,7 @@ public class Board {
 	private int id; // 게시글 번호
 	private String title; // 제목
 	private String writer; // 작성자 id
+	private String nickName; // 작성자 닉네임
 	private String content; // 내용
 	private String regDate; // 작성일자
 	private int viewCnt; // 조회수
@@ -19,6 +20,10 @@ public class Board {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -35,6 +40,14 @@ public class Board {
 
 	public void setWriter(String writer) {
 		this.writer = writer;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getContent() {
@@ -85,15 +98,11 @@ public class Board {
 		this.gymAddress = gymAddress;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", title=" + title + ", writer=" + writer + ", content=" + content + ", regDate="
-				+ regDate + ", viewCnt=" + viewCnt + ", likeCnt=" + likeCnt + ", imgSrc=" + imgSrc + ", gymAddress="
-				+ gymAddress + "]";
+		return "Board [id=" + id + ", title=" + title + ", writer=" + writer + ", nickName=" + nickName + ", content="
+				+ content + ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", likeCnt=" + likeCnt + ", imgSrc="
+				+ imgSrc + ", gymAddress=" + gymAddress + "]";
 	}
 
 }

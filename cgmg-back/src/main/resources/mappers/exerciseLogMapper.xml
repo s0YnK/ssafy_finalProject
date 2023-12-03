@@ -35,7 +35,7 @@
 	
 	<!-- 전체기간 동안 날짜별, 운동별 운동 세트수. 스트릭 표시 위해 -->
 	<select id="selectCntByDateAndExercise" parameterType="String" resultType="ExerciseLog">
-		SELECT userId, DATE_FORMAT(regDate, '%Y-%m-%d') AS regDate, exerciseName, bodyPart, SUM(cnt) as cnt
+		SELECT userId, DATE_FORMAT(regDate, '%Y-%m-%d') AS regDate, exerciseName, MAX(bodyPart) AS bodyPart, SUM(cnt) as cnt
 		FROM exerciseLog
 		WHERE userId = #{userId}
 		GROUP BY DATE_FORMAT(regDate, '%Y-%m-%d'), exerciseName

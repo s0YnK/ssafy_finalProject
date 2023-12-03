@@ -6,10 +6,12 @@
 
 	<!-- 댓글 리스트 조회 -->
 	<select id="selectComment" parameterType="int" resultType="Comment">
-		SELECT id, parentId, writer, content, DATE_FORMAT(regDate, '%Y-%m-%d') AS regDate, isDeleted
-		FROM comment
-		WHERE postId = #{postId}
-		ORDER BY parentId ASC
+		SELECT c.id, c.parentId, c.writer, u.nickName, c.content, DATE_FORMAT(c.regDate, '%Y-%m-%d') AS regDate, c.isDeleted
+		FROM comment c
+		LEFT OUTER JOIN users u
+		ON c.writer = u.userId
+		WHERE c.postId = #{postId}
+		ORDER BY c.parentId ASC, c.id ASC
 	</select>
 	
 	<!-- 댓글 등록 -->

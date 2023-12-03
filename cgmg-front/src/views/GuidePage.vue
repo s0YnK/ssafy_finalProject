@@ -66,7 +66,7 @@ const searchByName = async () => {
 
 // GPT API 호출 함수 정의
 const callGPT = async (query) => {
-    const api_key = "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";
+    const api_key = "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";
     const data = {
         model: 'gpt-3.5-turbo-1106',
         temperature: 0.5,

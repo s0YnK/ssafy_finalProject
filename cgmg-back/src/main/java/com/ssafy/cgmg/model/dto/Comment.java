@@ -1,5 +1,6 @@
 package com.ssafy.cgmg.model.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.annotations.ApiModel;
@@ -11,10 +12,11 @@ public class Comment {
 	private int postId; // 게시글 번호
 	private int parentId; // 부모 댓글 번호
 	private String writer; // 작성자
+	private String nickName; // 작성자 닉네임
 	private String content; // 댓글 내용
 	private String regDate; // 작성일자
 	private String isDeleted; // 삭제 유무
-	private List<Comment> children; // 자식 댓글 리스트
+	private List<Comment> children = new ArrayList<>(); // 자식 댓글 리스트
 
 	public Comment() {
 	}
@@ -49,6 +51,14 @@ public class Comment {
 
 	public void setWriter(String writer) {
 		this.writer = writer;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getContent() {
@@ -86,8 +96,8 @@ public class Comment {
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", postId=" + postId + ", parentId=" + parentId + ", writer=" + writer
-				+ ", content=" + content + ", regDate=" + regDate + ", isDeleted=" + isDeleted + ", children="
-				+ children + "]";
+				+ ", nickName=" + nickName + ", content=" + content + ", regDate=" + regDate + ", isDeleted="
+				+ isDeleted + ", children=" + children + "]";
 	}
 
 }

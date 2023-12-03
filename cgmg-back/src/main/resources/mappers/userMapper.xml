@@ -38,7 +38,7 @@
 	
 	<!-- 회원 프로필 조회. 마이페이지에 표시될 정보 -->
 	<select id="selectProfile" parameterType="String" resultType="User">
-		SELECT userId, name, nickname, profileImg, email, totalExerciseCnt, continuedStreak, followingCnt, followerCnt
+		SELECT userId, name, nickname, profileImg, email, totalExerciseCnt, continuedStreak
 		FROM users
 		WHERE userId = #{userId}
 	</select>
@@ -56,7 +56,7 @@
 	<select id="selectFollowingList" parameterType="String" resultType="FollowLog">
 		SELECT f.userId, f.followingId, u.nickName, u.totalExerciseCnt, u.profileImg
 		FROM followLog f
-		LEFT OUTER JOIN users u
+		INNER JOIN users u
 		ON f.followingId = u.userId
 		WHERE f.userId = #{userId}
 	</select>
@@ -65,7 +65,7 @@
 	<select id="selectFollowerList" parameterType="String" resultType="FollowLog">
 		SELECT f.followingId AS userId, f.userId AS followerId, u.nickName, u.totalExerciseCnt, u.profileImg
 		FROM followLog f
-		LEFT OUTER JOIN users u
+		INNER JOIN users u
 		ON f.userId = u.userId
 		WHERE f.followingId = #{userId}
 	</select>
@@ -83,7 +83,7 @@
 		AND followingId = #{followingId}
 	</delete>
 	
-	<!-- 팔로우 기록 모두 삭제 -->
+	<!-- 회원탈퇴 시 팔로우 기록 모두 삭제 -->
 	<delete id="deleteAllFollowLog" parameterType="String">
 		DELETE FROM followLog
 		WHERE userId = #{userId}

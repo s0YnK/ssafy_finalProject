@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.cgmg.model.dto.Comment;
@@ -24,6 +25,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/comment-api")
 @Api(tags="댓글 컨트롤러")
+@CrossOrigin("*")
 public class CommentRestController {
 
 	@Autowired
@@ -58,8 +60,8 @@ public class CommentRestController {
 	// 댓글 삭제
 	@DeleteMapping("/comment")
 	@ApiOperation(value="댓글 삭제")
-	public ResponseEntity<Void> delete(@RequestBody Comment comment){
-		commentService.removeComment(comment);
+	public ResponseEntity<Void> delete(@RequestParam int id){
+		commentService.removeComment(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	

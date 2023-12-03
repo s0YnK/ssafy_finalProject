@@ -49,6 +49,7 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public int removeBoard(int id) {
+		boardDao.deleteAllLikeLog2(id);
 		return boardDao.deleteBoard(id);
 	}
 
@@ -70,6 +71,16 @@ public class BoardServiceImpl implements BoardService {
 		LikeCnt likeCnt = new LikeCnt(likeLog.getPostId(), "down");
 		boardDao.updateLikeCnt(likeCnt);
 		return boardDao.deleteLikeLog(likeLog);
+	}
+	
+	@Override
+	public boolean getLikeLog(LikeLog likeLog) {
+		LikeLog result = boardDao.selectLikeLog(likeLog);
+		if (result != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

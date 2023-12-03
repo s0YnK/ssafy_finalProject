@@ -39,6 +39,9 @@ public interface BoardDao {
 	// 게시글 좋아요 취소
 	public int deleteLikeLog(LikeLog likeLog);
 	
+	// 좋아요 기록 조회
+	public LikeLog selectLikeLog(LikeLog likeLog);
+	
 	// 게시글 좋아요수 업데이트
 	public int updateLikeCnt(LikeCnt likeCnt);
 	
@@ -50,5 +53,8 @@ public interface BoardDao {
 	
 	// 회원탈퇴 시 작성한 게시글 모두 삭제
 	public int deleteAllBoard(String userId);
+	
+	// 게시글 삭제 시 좋아요 기록 모두 삭제
+	public int deleteAllLikeLog2(int postId);
 
 }

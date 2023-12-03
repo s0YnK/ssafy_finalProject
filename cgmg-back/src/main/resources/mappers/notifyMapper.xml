@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.cgmg.model.dao.NotifyDao">
+
+    <!-- 알림 등록 -->
+    <insert id="insertNotify" parameterType="Notify">
+    	INSERT INTO notify (userId, causedBy, postId, message, notType, isChecked)
+    	VALUES (#{userId}, #{causedBy}, #{postId}, #{message}, #{notType}, #{isChecked})
+    </insert>
+    
+    <!-- 알림 목록 조회 -->
+    <select id="selectNotifyList" parameterType="String" resultType="Notify">
+    	SELECT *
+    	FROM notify
+    	WHERE userId = #{userId}
+    	ORDER BY regDate DESC
+    </select>
+    
+    <!-- 알림 확인하면 확인 상태 업데이트 -->
+    
+    <!-- 회원탈퇴 시 알림 기록 삭제 -->
+    <delete id="deleteAllNotify" parameterType="String">
+		DELETE FROM Notify
+		WHERE userId = #{userId}
+	</delete>
+
+</mapper>

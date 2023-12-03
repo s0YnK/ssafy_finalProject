@@ -18,6 +18,6 @@ public interface CommentService {
 	// 댓글 삭제.
 	// 자식 댓글이 없으면 완전 삭제, 있으면 isDeleted 칼럼 값만 true로 변경
 	// 완전 삭제할 때 이미 삭제상태인 부모댓글 있으면 같이 삭제(재귀로 조상댓글까지 확인)
-	void removeComment(Comment comment);
+	void removeComment(int id);
 
 }

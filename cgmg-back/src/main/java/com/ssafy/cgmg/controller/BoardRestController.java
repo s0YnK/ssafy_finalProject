@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping("/board-api")
 @Api(tags="게시판 컨트롤러")
+@CrossOrigin("*")
 public class BoardRestController {
 
 	@Autowired
@@ -107,6 +109,15 @@ public class BoardRestController {
 	public ResponseEntity<Void> deleteLikeLog(@RequestBody LikeLog likeLog){
 		boardService.removeLikeLog(likeLog);
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+
+	// 게시글 좋아요 기록 조회
+	@GetMapping("/board/like/log")
+	@ApiOperation(value="게시글 좋아요 기록 조회", notes="해당 회원이 해당 게시글을 좋아요했는지 조회")
+	public ResponseEntity<Boolean> getLikeLog(LikeLog likeLog) {
+		boolean result = boardService.getLikeLog(likeLog);
+		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 	}
 	
 	// 좋아요한 게시글 목록 조회

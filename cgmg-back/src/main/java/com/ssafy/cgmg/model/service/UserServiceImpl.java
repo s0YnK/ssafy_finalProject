@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import com.ssafy.cgmg.model.dao.BoardDao;
 import com.ssafy.cgmg.model.dao.CommentDao;
 import com.ssafy.cgmg.model.dao.ExerciseLogDao;
+import com.ssafy.cgmg.model.dao.NotifyDao;
 import com.ssafy.cgmg.model.dao.UserDao;
 import com.ssafy.cgmg.model.dto.ContinuedStreak;
 import com.ssafy.cgmg.model.dto.ExerciseLog;
 import com.ssafy.cgmg.model.dto.FollowLog;
+import com.ssafy.cgmg.model.dto.Notify;
 import com.ssafy.cgmg.model.dto.User;
 
 @Service
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	CommentDao commentDao;
+	
+	@Autowired
+	NotifyDao notifyDao;
 	
 	@Override
 	public int signup(User user) {
@@ -80,6 +85,8 @@ public class UserServiceImpl implements UserService {
 		boardDao.deleteAllBoard(userId); // 내가 작성한 게시글 모두 삭제
 		commentDao.deleteAllComment(userId); // 내가 작성한 코멘트 삭제
 		exerciseLogDao.deleteAllExerciseLog(userId); // 내 운동 기록 모두 삭제
+		notifyDao.deleteAllNotify(userId); // 내 알림 기록 모두 삭제
+		
 		return userDao.deleteUser(userId);
 	}
 	
@@ -105,6 +112,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int writeFollowId(FollowLog followLog) {
+		Notify notify = new Notify();
+		
+		User user1 = userDao.selectOne(followLog.getUserId());
+		User user2 = userDao.selectOne(followLog.getFollowingId());
+		String message = user1.getNickName() + "님이 " + user2.getNickName() + "님을 <br>팔로우했습니다.";
+		
+		notify.setUserId(followLog.getFollowingId());
+		notify.setCausedBy(followLog.getUserId());
+		notify.setMessage(message);
+		notify.setNotType("follow");
+		notifyDao.insertNotify(notify);
+		
 		return userDao.insertFollowId(followLog);
 	}
 

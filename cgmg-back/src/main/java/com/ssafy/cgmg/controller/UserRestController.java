@@ -7,12 +7,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.cgmg.model.dto.FollowLog;
@@ -26,6 +28,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping("/user-api")
 @Api(tags = "유저 컨트롤러")
+@CrossOrigin("*")
 public class UserRestController {
 
 	@Autowired
@@ -86,7 +89,7 @@ public class UserRestController {
 	// 회원 탈퇴
 	@DeleteMapping("/user")
 	@ApiOperation(value = "회원 탈퇴")
-	public ResponseEntity<Integer> delete(@RequestBody String userId) {
+	public ResponseEntity<Integer> delete(@RequestParam String userId) {
 		int result = userService.removeUser(userId);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
