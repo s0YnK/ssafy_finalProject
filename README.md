@@ -141,7 +141,7 @@
   </tr>
   <tr>
     <td><img src="images/signup.gif" alt="회원가입"></td>
-    <td><img src="exercise.gif" alt="운동카운터"></td>
+    <td><img src="images/exercise.gif" alt="운동카운터"></td>
   </tr>
   <tr>
     <td>- 회원 가입을 하면 자동으로 로그인됩니다. <br>- 로그인을 하면 마이페이지로 이동합니다.</td>
@@ -197,7 +197,7 @@
 <table>
   <tr>
     <th style="text-align: center;">다크모드</th>
-    <th style="text-align: center;"></th>
+    <th style="text-align: center; width: 50%"></th>
   </tr>
   <tr>
     <td><img src="images/darkmode.gif" alt="다크모드"></td>
