@@ -125,7 +125,7 @@
     <th style="text-align: center;">운동법 가이드</th>
   </tr>
   <tr>
-    <td><img src="/main.gif" alt="메인"></td>
+    <td><img src="images/main.gif" alt="메인"></td>
     <td>![운동법가이드](images/2.gif)</td>
   </tr>
   <tr>
