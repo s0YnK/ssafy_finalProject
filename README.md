@@ -125,7 +125,7 @@
     <th style="text-align: center;">운동법 가이드</th>
   </tr>
   <tr>
-    <td>![](https://github.com/seom98/1000geun10000geun/blob/main/images/1.gif)</td>
+    <td><img src="/main.gif" alt="메인"></td>
     <td>![운동법가이드](images/2.gif)</td>
   </tr>
   <tr>
