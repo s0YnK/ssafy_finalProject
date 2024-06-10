@@ -181,7 +181,7 @@
 ### 김소연<br>
 담당 역할: 백엔드
 구현 사항:
-> - Spring Boot, MyBatis, MySQL을 이용해서 REST API 구현
+1. Spring Boot, MyBatis, MySQL을 이용해서 REST API 구현
 > - 무한 대댓글, 커뮤니티 게시판
 > - 팔로우, 게시글 좋아요 및 알림 기능
 > - 운동 기록 및 조회 기능
