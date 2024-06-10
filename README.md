@@ -197,7 +197,7 @@
 <table>
   <tr>
     <th style="text-align: center; width: 50%;">다크모드</th>
-    <th style="text-align: center; width: 50%;"> </th>
+    <th style="text-align: center; width: 50%;">&nbsp</th>
   </tr>
   <tr>
     <td><img src="images/darkmode.gif" alt="다크모드"></td>
