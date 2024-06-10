@@ -126,7 +126,7 @@
   </tr>
   <tr>
     <td><img src="images/main.gif" alt="메인"></td>
-    <td>![운동법가이드](images/2.gif)</td>
+    <td><img src="images/guide.gif" alt="운동법가이드"></td>
   </tr>
   <tr>
     <td>- 천근만근 서비스의 기능에 대해 설명하는 페이지입니다. <br>- 일부 서비스는 로그인을 해야 이용할 수 있습니다.</td>
@@ -140,8 +140,8 @@
     <th style="text-align: center;">운동 카운터</th>
   </tr>
   <tr>
-    <td>![회원가입](images/3.gif)</td>
-    <td>![운동카운터](images/4.gif)</td>
+    <td><img src="images/signup.gif" alt="회원가입"></td>
+    <td><img src="exercise.gif" alt="운동카운터"></td>
   </tr>
   <tr>
     <td>- 회원 가입을 하면 자동으로 로그인됩니다. <br>- 로그인을 하면 마이페이지로 이동합니다.</td>
@@ -155,8 +155,8 @@
     <th style="text-align: center;">무한대댓글</th>
   </tr>
   <tr>
-    <td>![커뮤니티](images/5.gif)</td>
-    <td>![무한대댓글](images/6.gif)</td>
+    <td><img src="images/board.gif" alt="게시판"></td>
+    <td><img src="images/comment.gif" alt="댓글"></td>
   </tr>
   <tr>
     <td>- 게시글을 정렬할 수 있습니다. <br>- 인기 게시글 TOP3이 표시됩니다. <br>- 게시글을 작성할 때 지도에서 장소를 선택해서 공유할 수 있습니다. <br>- 마음에 드는 게시글을 '좋아요'할 수 있습니다. </td>
@@ -170,8 +170,8 @@
     <th style="text-align: center;">팔로우</th>
   </tr>
   <tr>
-    <td>![운동랭킹](images/7.gif)</td>
-    <td>![팔로우](images/8.gif)</td>
+    <td><img src="images/ranking.gif" alt="랭킹"></td>
+    <td><img src="images/follow.gif" alt="팔로우"></td>
   </tr>
   <tr>
     <td>- 운동을 열심히 해오고 있는 회원의 랭킹을 볼 수 있습니다. <br>- 전체 랭킹과 운동 부위별 랭킹을 볼 수 있습니다. <br>- 회원을 클릭하면 해당 회원의 페이지로 이동합니다.   </td>
@@ -185,8 +185,8 @@
     <th style="text-align: center;">회원정보 수정 및 탈퇴</th>
   </tr>
   <tr>
-    <td>![알림](images/9.gif)</td>
-    <td>![회원정보](images/10.gif)</td>
+    <td><img src="images/notification.gif" alt="알림"></td>
+    <td><img src="images/update.gif" alt="회원정보"></td>
   </tr>
   <tr>
     <td>- 내가 쓴 게시글에 다른 회원이 좋아요를 하면 알림을 받을 수 있습니다. <br>- 다른 회원이 나를 팔로잉하면 알림을 받을 수 있습니다. <br>- 게시글 좋아요 알림을 클릭하면 해당 게시글로 이동합니다. <br>-팔로우 알림을 클릭하면 해당 회원의 마이페이지로 이동합니다.</td>
@@ -200,7 +200,7 @@
     <th style="text-align: center;"></th>
   </tr>
   <tr>
-    <td>![다크모드](images/11.gif)</td>
+    <td><img src="images/darkmode.gif" alt="다크모드"></td>
     <td></td>
   </tr>
   <tr>
