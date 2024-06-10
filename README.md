@@ -197,14 +197,14 @@
 <table>
   <tr>
     <th style="text-align: center; width: 50%;">다크모드</th>
-    <th style="text-align: center; width: 50%;"></th>
+    <th style="text-align: center; width: 50%;"> </th>
   </tr>
   <tr>
     <td><img src="images/darkmode.gif" alt="다크모드"></td>
-    <td></td>
+    <td> </td>
   </tr>
   <tr>
     <td>- 어두운 테마를 적용할 수 있습니다.</td>
-    <td></td>
+    <td> </td>
   </tr>
 </table>
